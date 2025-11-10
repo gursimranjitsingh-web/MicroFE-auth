@@ -7,9 +7,10 @@ export default defineConfig({
   plugins: [
     react(),
     federation({
-      name: 'authApp',
-      remotes: {
-        productsApp: 'http://localhost:5174/assets/remoteEntry.js',
+      name: 'productsApp',
+      filename: 'remoteEntry.js',
+      exposes: {
+        './ProductsApp': './src/ProductsApp.tsx',
       },
       shared: ['react', 'react-dom'],
     }),
@@ -18,6 +19,6 @@ export default defineConfig({
     target: 'esnext',
   },
   preview:{
-    port:5000
+    port: 5174
   }
 })

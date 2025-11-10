@@ -1,15 +1,22 @@
 import { Link, Outlet } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { logout } from '../store/authSlice';
+import { logout, updateUserData } from '../store/authSlice';
+import type { RootState } from '../store';
 
 const Layout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const {userData} = useSelector((state:RootState) => state.auth);
 
   const handleLogout = () => {
     dispatch(logout());
     navigate('/login');
+  };
+
+  const handleGenerateUsername = () => {
+    const randomName = 'User' + Math.floor(Math.random() * 1000);
+    dispatch(updateUserData(randomName));
   };
 
   return (
@@ -23,7 +30,7 @@ const Layout = () => {
         display: 'flex',
         flexDirection: 'column'
       }}>
-        <h3 style={{ marginBottom: '2rem' }}>Menu</h3>
+        <h3 style={{ marginBottom: '2rem' }}>Welcome {userData?.name}</h3>
         <Link
           to="/"
           style={{
@@ -51,6 +58,20 @@ const Layout = () => {
           Cart
         </Link>
         <button
+          onClick={handleGenerateUsername}
+          style={{
+            marginBottom: '1rem',
+            padding: '0.5rem',
+            backgroundColor: '#007bff',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer'
+          }}
+        >
+          Generate New Username
+        </button>
+        <button
           onClick={handleLogout}
           style={{
             marginTop: 'auto',
@@ -70,7 +91,8 @@ const Layout = () => {
       <div style={{
         flex: 1,
         padding: '2rem',
-        backgroundColor: '#f8f9fa'
+        backgroundColor: '#f8f9fa',
+        overflow: 'auto'
       }}>
         <Outlet />
       </div>
