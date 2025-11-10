@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
+import { useAuth } from 'authApp/AuthProvider';
+
 
 interface Product {
   id: number;
@@ -8,17 +10,15 @@ interface Product {
   image: string;
 }
 
-interface ProductsListProps {
-  onAddToCart: (product: Product) => void;
-  cartItems: Product[];
-}
-
-const ProductsList = ({ onAddToCart, cartItems }: ProductsListProps) => {
+const ProductsList = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const { token } = useAuth();
 
   useEffect(() => {
-    fetch('https://fakestoreapi.com/products')
+    fetch('https://fakestoreapi.com/products',{ headers: {
+      'Authorization': `Bearer ${token}`
+    }})
       .then(res => res.json())
       .then(data => {
         setProducts(data);
@@ -41,12 +41,7 @@ const ProductsList = ({ onAddToCart, cartItems }: ProductsListProps) => {
       justifyContent: 'center'
     }}>
       {products.map(product => (
-        <ProductCard
-          key={product.id}
-          product={product}
-          onAddToCart={onAddToCart}
-          isInCart={cartItems.some(item => item.id === product.id)}
-        />
+        <ProductCard key={product.id} product={product} />
       ))}
     </div>
   );

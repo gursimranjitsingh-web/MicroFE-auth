@@ -1,27 +1,22 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../store/authSlice';
-import type { RootState } from '../store';
+import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {token} = useSelector((state:RootState) => state.auth);
+  const { token, login } = useAuth();
 
-
- useEffect(()=>{
-     if(token){
-    navigate('/');
-  }
- },[token])
-
+  useEffect(() => {
+    if (token) {
+      navigate('/');
+    }
+  }, [token, navigate]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(login());
+    login();
     navigate('/');
   };
 

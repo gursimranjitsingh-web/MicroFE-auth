@@ -9,10 +9,13 @@ export default defineConfig({
     federation({
       name: 'productsApp',
       filename: 'remoteEntry.js',
+      remotes: {
+        authApp: 'http://localhost:5000/assets/remoteEntry.js',
+      },
       exposes: {
         './ProductsApp': './src/ProductsApp.tsx',
       },
-      shared: ['react', 'react-dom'],
+      shared: ['react', 'react-dom', 'react-redux', '@reduxjs/toolkit', 'redux-persist'],
     }),
   ],
   build: {

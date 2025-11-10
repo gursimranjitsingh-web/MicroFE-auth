@@ -8,11 +8,18 @@ export default defineConfig({
     react(),
     federation({
       name: 'authApp',
+      filename: 'remoteEntry.js',
       remotes: {
         productsApp: 'http://localhost:5174/assets/remoteEntry.js',
-        cartApp: 'http://localhost:5175/assets/remoteEntry.js'
+        cartApp: 'http://localhost:5175/assets/remoteEntry.js',
       },
-      shared: ['react', 'react-dom'],
+      exposes: {
+        './AuthProvider': './src/context/AuthContext.tsx',
+        './CartProvider': './src/context/CartContext.tsx',
+        './useAuth': './src/context/AuthContext.tsx',
+        './useCart': './src/context/CartContext.tsx',
+      },
+      shared: ['react', 'react-dom', 'react-redux', '@reduxjs/toolkit', 'redux-persist'],
     }),
   ],
   build: {

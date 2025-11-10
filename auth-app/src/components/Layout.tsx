@@ -1,33 +1,21 @@
 import { Link, Outlet } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { logout, updateUserData } from '../store/authSlice';
-import type { RootState } from '../store';
+import { useAuth } from '../context/AuthContext';
+import { useCart } from '../context/CartContext';
 
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  image: string;
-}
-
-interface LayoutProps {
-  cartItems: Product[];
-}
-
-const LayoutContent: React.FC<LayoutProps> = ({ cartItems }) => {
-  const dispatch = useDispatch();
+const LayoutContent = () => {
   const navigate = useNavigate();
-  const {userData} = useSelector((state:RootState) => state.auth);
+  const { userData, logout, updateUserData } = useAuth();
+  const { cartItems } = useCart();
 
   const handleLogout = () => {
-    dispatch(logout());
+    logout();
     navigate('/login');
   };
 
   const handleGenerateUsername = () => {
     const randomName = 'User' + Math.floor(Math.random() * 1000);
-    dispatch(updateUserData(randomName));
+    updateUserData(randomName);
   };
 
   return (
@@ -111,10 +99,8 @@ const LayoutContent: React.FC<LayoutProps> = ({ cartItems }) => {
   );
 };
 
-const Layout: React.FC<LayoutProps> = ({ cartItems }) => {
-  return (
-    <LayoutContent cartItems={cartItems} />
-  );
+const Layout = () => {
+  return <LayoutContent />;
 };
 
 export default Layout;

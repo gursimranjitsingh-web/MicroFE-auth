@@ -1,19 +1,9 @@
 import React from 'react';
+import { useCart } from '../context/CartContext';
 
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  image: string;
-}
+const Cart: React.FC = () => {
+  const { cartItems, removeFromCart, clearCart } = useCart();
 
-interface CartProps {
-  cartItems: Product[];
-  onRemoveFromCart: (productId: number) => void;
-  onClearCart: () => void;
-}
-
-const Cart: React.FC<CartProps> = ({ cartItems, onRemoveFromCart, onClearCart }) => {
   const totalPrice = cartItems.reduce((sum, item) => sum + item.price, 0);
 
   return (
@@ -39,7 +29,7 @@ const Cart: React.FC<CartProps> = ({ cartItems, onRemoveFromCart, onClearCart })
                   <p style={{ margin: '0', fontSize: '1.2rem', fontWeight: 'bold', color: '#007bff' }}>${item.price}</p>
                 </div>
                 <button
-                  onClick={() => onRemoveFromCart(item.id)}
+                  onClick={() => removeFromCart(item.id)}
                   style={{
                     backgroundColor: '#dc3545',
                     color: 'white',
@@ -61,7 +51,7 @@ const Cart: React.FC<CartProps> = ({ cartItems, onRemoveFromCart, onClearCart })
           }}>
             <h3>Total: ${totalPrice.toFixed(2)}</h3>
             <button
-              onClick={onClearCart}
+              onClick={clearCart}
               style={{
                 backgroundColor: '#6c757d',
                 color: 'white',

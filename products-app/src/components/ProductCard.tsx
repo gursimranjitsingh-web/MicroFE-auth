@@ -1,3 +1,6 @@
+import { useCart } from 'authApp/CartProvider';
+import { useAuth } from 'authApp/AuthProvider';
+
 interface Product {
   id: number;
   title: string;
@@ -7,13 +10,18 @@ interface Product {
 
 interface ProductCardProps {
   product: Product;
-  onAddToCart: (product: Product) => void;
-  isInCart: boolean;
 }
 
-const ProductCard = ({ product, onAddToCart, isInCart }: ProductCardProps) => {
+const ProductCard = ({ product }: ProductCardProps) => {
+  const { cartItems, addToCart } = useCart();
+  const { token } = useAuth();
+
+  const isInCart = cartItems.some((item: Product) => item.id === product.id);
+
   const handleAddToCart = () => {
-    onAddToCart(product);
+    if (token) {
+      addToCart(product);
+    }
   };
 
   return (
@@ -30,14 +38,14 @@ const ProductCard = ({ product, onAddToCart, isInCart }: ProductCardProps) => {
       <p style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#007bff' }}>${product.price}</p>
       <button
         onClick={handleAddToCart}
-        disabled={isInCart}
+        disabled={isInCart || !token}
         style={{
           backgroundColor: isInCart ? '#6c757d' : '#28a745',
           color: 'white',
           border: 'none',
           padding: '0.5rem 1rem',
           borderRadius: '4px',
-          cursor: isInCart ? 'not-allowed' : 'pointer'
+          cursor: isInCart || !token ? 'not-allowed' : 'pointer'
         }}
       >
         {isInCart ? 'In Cart' : 'Add to Cart'}

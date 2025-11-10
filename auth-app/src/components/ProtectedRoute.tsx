@@ -1,13 +1,12 @@
-import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import type { RootState } from '../store';
+import { useAuth } from '../context/AuthContext';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
 }
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const token = useSelector((state: RootState) => state.auth.token);
+  const { token } = useAuth();
 
   if (!token) {
     return <Navigate to="/login" replace />;
