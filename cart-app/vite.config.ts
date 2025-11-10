@@ -9,11 +9,13 @@ export default defineConfig({
     federation({
       name: 'cartApp',
       filename: 'remoteEntry.js',
-      exposes: {
-        './CartService': './src/CartService.tsx',
-        './hooks': './src/hooks.ts',
+      remotes: {
+        authApp: 'http://localhost:5000/assets/remoteEntry.js',
       },
-      shared: ['react', 'react-dom'],
+      exposes: {
+        './Cart': './src/Cart.tsx',
+      },
+      shared: ['react', 'react-dom', 'react-redux', '@reduxjs/toolkit', 'redux-persist'],
     }),
   ],
   build: {
