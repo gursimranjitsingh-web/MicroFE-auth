@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState } from '../store';
+import { login } from '../store/authSlice';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const { token, login } = useAuth();
+  const { token } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (token) {
@@ -16,7 +19,7 @@ const Login = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    login();
+    dispatch(login())
     navigate('/');
   };
 

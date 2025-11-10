@@ -1,21 +1,52 @@
 import { Link, Outlet } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { useCart } from '../context/CartContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
+import type { RootState } from '../store';
+import { logout, updateUserData } from '../store/authSlice';
+import { eventBus } from '../eventBus';
 
 const LayoutContent = () => {
   const navigate = useNavigate();
-  const { userData, logout, updateUserData } = useAuth();
-  const { cartItems } = useCart();
+  const dispatch = useDispatch();
+  const { userData } = useSelector((state: RootState) => state.auth);
+  const [cartItems, setCartItems] = useState<any[]>([]);
+
+  useEffect(() => {
+    // Subscribe to cart events to get cart count
+    const subscription = eventBus.onCart().subscribe((event: any) => {
+      switch (event.type) {
+        case 'ADD_TO_CART':
+          setCartItems(prev => [...prev, event.payload]);
+          break;
+        case 'REMOVE_FROM_CART':
+          setCartItems(prev => prev.filter(item => item.id !== event.payload));
+          break;
+        case 'CLEAR_CART':
+          setCartItems([]);
+          break;
+        case 'CART_STATE_CHANGE':
+          if (event.payload && Array.isArray(event.payload)) {
+            setCartItems(event.payload);
+          }
+          break;
+      }
+    });
+
+    // Request current cart state on mount
+    eventBus.emit({ type: 'CART_STATE_CHANGE', payload: 'REQUEST_STATE' });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   const handleLogout = () => {
-    logout();
+    dispatch(logout());
     navigate('/login');
   };
 
   const handleGenerateUsername = () => {
     const randomName = 'User' + Math.floor(Math.random() * 1000);
-    updateUserData(randomName);
+    dispatch(updateUserData(randomName));
   };
 
   return (

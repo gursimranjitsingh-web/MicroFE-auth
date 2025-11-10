@@ -1,5 +1,5 @@
-import { useCart } from 'authApp/CartProvider';
-import { useAuth } from 'authApp/AuthProvider';
+import { useState, useEffect } from 'react';
+import { eventBus } from 'authApp/eventBus';
 
 interface Product {
   id: number;
@@ -13,14 +13,64 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  const { cartItems, addToCart } = useCart();
-  const { token } = useAuth();
+  const [isInCart, setIsInCart] = useState(false);
+  const [token, setToken] = useState<string | null>(null);
 
-  const isInCart = cartItems.some((item: Product) => item.id === product.id);
+  useEffect(() => {
+    // Subscribe to auth events to get token
+    const authSubscription = eventBus.onAuth().subscribe((event: any) => {
+      switch (event.type) {
+        case 'LOGIN':
+          setToken(event.payload.token);
+          break;
+        case 'LOGOUT':
+          setToken(null);
+          break;
+        case 'AUTH_STATE_CHANGE':
+          if (event.payload) {
+            setToken(event.payload.token);
+          }
+          break;
+      }
+    });
+
+    // Subscribe to cart events to update local state
+    const cartSubscription = eventBus.onCart().subscribe((event: any) => {
+      switch (event.type) {
+        case 'ADD_TO_CART':
+          if (event.payload.id === product.id) {
+            setIsInCart(true);
+          }
+          break;
+        case 'REMOVE_FROM_CART':
+          if (event.payload === product.id) {
+            setIsInCart(false);
+          }
+          break;
+        case 'CLEAR_CART':
+          setIsInCart(false);
+          break;
+        case 'CART_STATE_CHANGE':
+          if (event.payload && Array.isArray(event.payload)) {
+            setIsInCart(event.payload.some((item: any) => item.id === product.id));
+          }
+          break;
+      }
+    });
+
+    // Request current auth and cart state on mount
+    eventBus.emit({ type: 'AUTH_STATE_CHANGE', payload: 'REQUEST_STATE' });
+    eventBus.emit({ type: 'CART_STATE_CHANGE', payload: 'REQUEST_STATE' });
+
+    return () => {
+      authSubscription.unsubscribe();
+      cartSubscription.unsubscribe();
+    };
+  }, [product.id]);
 
   const handleAddToCart = () => {
     if (token) {
-      addToCart(product);
+      eventBus.emit({ type: 'ADD_TO_CART', payload: product });
     }
   };
 

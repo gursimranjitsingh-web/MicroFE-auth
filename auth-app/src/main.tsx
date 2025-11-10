@@ -5,6 +5,9 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { store, persistor } from './store'
 import './index.css'
 import App from './App.tsx'
+// Initialize services
+import './services/authService'
+import './services/cartService'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

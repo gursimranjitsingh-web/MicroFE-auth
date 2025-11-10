@@ -1,3 +1,16 @@
+/**
+ * DEPRECATED - This file is no longer used
+ * 
+ * The application now uses event-driven communication via EventBus (RxJS)
+ * instead of Context API for sharing cart state between micro-frontends.
+ * 
+ * See:
+ * - src/eventBus/index.ts - Event bus implementation
+ * - src/services/cartService.ts - Cart state management with events
+ * 
+ * This file is kept for reference only.
+ */
+
 import React, { createContext, useContext, useState } from 'react';
 import { eventBus } from '../eventBus';
 import type { ReactNode } from 'react';
@@ -27,10 +40,8 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
 
   const addToCart = (product: Product) => {
     setCartItems(prev => {
-      // Check if product already exists
       const existing = prev.find(item => item.id === product.id);
       if (!existing) {
-        // Emit event for other MFs
         eventBus.emit({ type: 'ADD_TO_CART', payload: product });
         return [...prev, product];
       }
@@ -40,7 +51,6 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
 
   const removeFromCart = (productId: number) => {
     setCartItems(prev => {
-      // Emit event for other MFs
       eventBus.emit({ type: 'REMOVE_FROM_CART', payload: productId });
       return prev.filter(item => item.id !== productId);
     });
@@ -48,7 +58,6 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
 
   const clearCart = () => {
     setCartItems([]);
-    // Emit event for other MFs
     eventBus.emit({ type: 'CLEAR_CART' });
   };
 

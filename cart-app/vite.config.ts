@@ -15,7 +15,7 @@ export default defineConfig({
       exposes: {
         './Cart': './src/Cart.tsx',
       },
-      shared: ['react', 'react-dom', 'react-redux', '@reduxjs/toolkit', 'redux-persist'],
+      shared: ['react', 'react-dom', 'react-redux', '@reduxjs/toolkit', 'redux-persist', 'rxjs'],
     }),
   ],
   build: {

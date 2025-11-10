@@ -1,8 +1,56 @@
-import React from 'react';
-import { useCart } from 'authApp/CartProvider';
+import React, { useState, useEffect } from 'react';
+import { eventBus } from 'authApp/eventBus';
+
+interface CartItem {
+  id: number;
+  title: string;
+  price: number;
+  image: string;
+}
 
 const Cart: React.FC = () => {
-  const { cartItems, removeFromCart, clearCart } = useCart();
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+  useEffect(() => {
+    // Subscribe to cart events
+    const subscription = eventBus.onCart().subscribe((event: any) => {
+      switch (event.type) {
+        case 'ADD_TO_CART':
+          setCartItems(prev => {
+            const existing = prev.find(item => item.id === event.payload.id);
+            if (!existing) {
+              return [...prev, event.payload];
+            }
+            return prev;
+          });
+          break;
+        case 'REMOVE_FROM_CART':
+          setCartItems(prev => prev.filter(item => item.id !== event.payload));
+          break;
+        case 'CLEAR_CART':
+          setCartItems([]);
+          break;
+        case 'CART_STATE_CHANGE':
+          if (Array.isArray(event.payload)) {
+            setCartItems(event.payload);
+          }
+          break;
+      }
+    });
+
+    // Request current cart state on mount
+    eventBus.emit({ type: 'CART_STATE_CHANGE', payload: 'REQUEST_STATE' });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleRemoveFromCart = (itemId: number) => {
+    eventBus.emit({ type: 'REMOVE_FROM_CART', payload: itemId });
+  };
+
+  const handleClearCart = () => {
+    eventBus.emit({ type: 'CLEAR_CART' });
+  };
 
   const totalPrice = cartItems.reduce((sum, item) => sum + item.price, 0);
 
@@ -29,7 +77,7 @@ const Cart: React.FC = () => {
                   <p style={{ margin: '0', fontSize: '1.2rem', fontWeight: 'bold', color: '#007bff' }}>${item.price}</p>
                 </div>
                 <button
-                  onClick={() => removeFromCart(item.id)}
+                  onClick={() => handleRemoveFromCart(item.id)}
                   style={{
                     backgroundColor: '#dc3545',
                     color: 'white',
@@ -51,7 +99,7 @@ const Cart: React.FC = () => {
           }}>
             <h3>Total: ${totalPrice.toFixed(2)}</h3>
             <button
-              onClick={clearCart}
+              onClick={handleClearCart}
               style={{
                 backgroundColor: '#6c757d',
                 color: 'white',

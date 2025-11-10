@@ -15,7 +15,7 @@ export default defineConfig({
       exposes: {
         './ProductsApp': './src/ProductsApp.tsx',
       },
-      shared: ['react', 'react-dom', 'react-redux', '@reduxjs/toolkit', 'redux-persist'],
+      shared: ['react', 'react-dom', 'react-redux', '@reduxjs/toolkit', 'redux-persist', 'rxjs'],
     }),
   ],
   build: {

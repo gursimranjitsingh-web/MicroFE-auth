@@ -14,12 +14,9 @@ export default defineConfig({
         cartApp: 'http://localhost:5175/assets/remoteEntry.js',
       },
       exposes: {
-        './AuthProvider': './src/context/AuthContext.tsx',
-        './CartProvider': './src/context/CartContext.tsx',
-        './useAuth': './src/context/AuthContext.tsx',
-        './useCart': './src/context/CartContext.tsx',
+        './eventBus': './src/eventBus/index.ts',
       },
-      shared: ['react', 'react-dom', 'react-redux', '@reduxjs/toolkit', 'redux-persist'],
+      shared: ['react', 'react-dom', 'react-redux', '@reduxjs/toolkit', 'redux-persist', 'rxjs'],
     }),
   ],
   build: {
