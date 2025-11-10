@@ -1,6 +1,3 @@
-import { useDispatch } from 'react-redux';
-import { addToCart } from '../store/cartSlice';
-
 interface Product {
   id: number;
   title: string;
@@ -10,13 +7,13 @@ interface Product {
 
 interface ProductCardProps {
   product: Product;
+  onAddToCart: (product: Product) => void;
+  isInCart: boolean;
 }
 
-const ProductCard = ({ product }: ProductCardProps) => {
-  const dispatch = useDispatch();
-
+const ProductCard = ({ product, onAddToCart, isInCart }: ProductCardProps) => {
   const handleAddToCart = () => {
-    dispatch(addToCart(product));
+    onAddToCart(product);
   };
 
   return (
@@ -33,16 +30,17 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <p style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#007bff' }}>${product.price}</p>
       <button
         onClick={handleAddToCart}
+        disabled={isInCart}
         style={{
-          backgroundColor: '#28a745',
+          backgroundColor: isInCart ? '#6c757d' : '#28a745',
           color: 'white',
           border: 'none',
           padding: '0.5rem 1rem',
           borderRadius: '4px',
-          cursor: 'pointer'
+          cursor: isInCart ? 'not-allowed' : 'pointer'
         }}
       >
-        Add to Cart
+        {isInCart ? 'In Cart' : 'Add to Cart'}
       </button>
     </div>
   );

@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-    <ProductsApp/>
+    <ProductsApp onAddToCart={()=>{}} cartItems={[]}/>
     </>
   )
 }

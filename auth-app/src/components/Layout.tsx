@@ -4,7 +4,18 @@ import { useNavigate } from 'react-router-dom';
 import { logout, updateUserData } from '../store/authSlice';
 import type { RootState } from '../store';
 
-const Layout = () => {
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  image: string;
+}
+
+interface LayoutProps {
+  cartItems: Product[];
+}
+
+const LayoutContent: React.FC<LayoutProps> = ({ cartItems }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const {userData} = useSelector((state:RootState) => state.auth);
@@ -55,7 +66,7 @@ const Layout = () => {
             display: 'block'
           }}
         >
-          Cart
+          Cart ({cartItems.length})
         </Link>
         <button
           onClick={handleGenerateUsername}
@@ -97,6 +108,12 @@ const Layout = () => {
         <Outlet />
       </div>
     </div>
+  );
+};
+
+const Layout: React.FC<LayoutProps> = ({ cartItems }) => {
+  return (
+    <LayoutContent cartItems={cartItems} />
   );
 };
 

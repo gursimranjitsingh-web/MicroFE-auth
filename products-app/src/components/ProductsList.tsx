@@ -9,20 +9,16 @@ interface Product {
 }
 
 interface ProductsListProps {
-  token: string | null;
+  onAddToCart: (product: Product) => void;
+  cartItems: Product[];
 }
 
-const ProductsList = ({ token }: ProductsListProps) => {
+const ProductsList = ({ onAddToCart, cartItems }: ProductsListProps) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const headers: HeadersInit = {};
-    if (token) {
-      headers['Authorization'] = `Bearer ${token}`;
-    }
-
-    fetch('https://fakestoreapi.com/products', { headers })
+    fetch('https://fakestoreapi.com/products')
       .then(res => res.json())
       .then(data => {
         setProducts(data);
@@ -32,7 +28,7 @@ const ProductsList = ({ token }: ProductsListProps) => {
         console.error('Error fetching products:', error);
         setLoading(false);
       });
-  }, [token]);
+  }, []);
 
   if (loading) {
     return <div>Loading products...</div>;
@@ -45,7 +41,12 @@ const ProductsList = ({ token }: ProductsListProps) => {
       justifyContent: 'center'
     }}>
       {products.map(product => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard
+          key={product.id}
+          product={product}
+          onAddToCart={onAddToCart}
+          isInCart={cartItems.some(item => item.id === product.id)}
+        />
       ))}
     </div>
   );

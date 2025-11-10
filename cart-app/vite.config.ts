@@ -7,10 +7,11 @@ export default defineConfig({
   plugins: [
     react(),
     federation({
-      name: 'authApp',
-      remotes: {
-        productsApp: 'http://localhost:5174/assets/remoteEntry.js',
-        cartApp: 'http://localhost:5175/assets/remoteEntry.js'
+      name: 'cartApp',
+      filename: 'remoteEntry.js',
+      exposes: {
+        './CartService': './src/CartService.tsx',
+        './hooks': './src/hooks.ts',
       },
       shared: ['react', 'react-dom'],
     }),
@@ -19,6 +20,6 @@ export default defineConfig({
     target: 'esnext',
   },
   preview:{
-    port:5000
+    port: 5175
   }
 })
