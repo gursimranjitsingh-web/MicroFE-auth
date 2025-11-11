@@ -15,26 +15,25 @@ const LayoutContent = () => {
   useEffect(() => {
     // Subscribe to cart events to get cart count
     const subscription = eventBus.onCart().subscribe((event: any) => {
+      // Ignore REQUEST_STATE events
+      if (event.payload === 'REQUEST_STATE') {
+        return;
+      }
+      
       switch (event.type) {
-        case 'ADD_TO_CART':
-          setCartItems(prev => [...prev, event.payload]);
-          break;
-        case 'REMOVE_FROM_CART':
-          setCartItems(prev => prev.filter(item => item.id !== event.payload));
-          break;
-        case 'CLEAR_CART':
-          setCartItems([]);
-          break;
         case 'CART_STATE_CHANGE':
           if (event.payload && Array.isArray(event.payload)) {
+            console.log('🛒 Layout: Cart updated, count:', event.payload.length);
             setCartItems(event.payload);
           }
           break;
       }
     });
 
-    // Request current cart state on mount
-    eventBus.emit({ type: 'CART_STATE_CHANGE', payload: 'REQUEST_STATE' });
+    // Request current cart state on mount with delay
+    setTimeout(() => {
+      eventBus.emit({ type: 'CART_STATE_CHANGE', payload: 'REQUEST_STATE' });
+    }, 50);
 
     return () => subscription.unsubscribe();
   }, []);

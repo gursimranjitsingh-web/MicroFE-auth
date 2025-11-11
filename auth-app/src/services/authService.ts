@@ -3,6 +3,8 @@ import { store } from '../store';
 import { login as loginAction, logout as logoutAction } from '../store/authSlice';
 
 class AuthService {
+  private hasEmittedInitialState = false;
+
   constructor() {
     // Subscribe to Redux store changes and emit events
     store.subscribe(() => {
@@ -23,6 +25,7 @@ class AuthService {
           if (event.payload === 'REQUEST_STATE') {
             // Respond with current auth state
             const state = store.getState();
+            console.log('📤 Sending auth state:', state.auth);
             eventBus.emit({
               type: 'AUTH_STATE_CHANGE',
               payload: { token: state.auth.token, userData: state.auth.userData }
@@ -31,6 +34,19 @@ class AuthService {
           break;
       }
     });
+
+    // Emit initial state after a short delay to ensure all MFs are ready
+    setTimeout(() => {
+      if (!this.hasEmittedInitialState) {
+        const state = store.getState();
+        console.log('🎬 Initial auth state broadcast:', state.auth);
+        eventBus.emit({
+          type: 'AUTH_STATE_CHANGE',
+          payload: { token: state.auth.token, userData: state.auth.userData }
+        });
+        this.hasEmittedInitialState = true;
+      }
+    }, 100);
   }
 
   public login(): void {

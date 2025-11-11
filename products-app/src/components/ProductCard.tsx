@@ -10,66 +10,43 @@ interface Product {
 
 interface ProductCardProps {
   product: Product;
+  token: string | null;
 }
 
-const ProductCard = ({ product }: ProductCardProps) => {
+const ProductCard = ({ product, token }: ProductCardProps) => {
   const [isInCart, setIsInCart] = useState(false);
-  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
     // Subscribe to auth events to get token
-    const authSubscription = eventBus.onAuth().subscribe((event: any) => {
-      switch (event.type) {
-        case 'LOGIN':
-          setToken(event.payload.token);
-          break;
-        case 'LOGOUT':
-          setToken(null);
-          break;
-        case 'AUTH_STATE_CHANGE':
-          if (event.payload) {
-            setToken(event.payload.token);
-          }
-          break;
-      }
-    });
+   
 
     // Subscribe to cart events to update local state
     const cartSubscription = eventBus.onCart().subscribe((event: any) => {
+      // Ignore REQUEST_STATE events
+      if (event.payload === 'REQUEST_STATE') {
+        return;
+      }
+      
       switch (event.type) {
-        case 'ADD_TO_CART':
-          if (event.payload.id === product.id) {
-            setIsInCart(true);
-          }
-          break;
-        case 'REMOVE_FROM_CART':
-          if (event.payload === product.id) {
-            setIsInCart(false);
-          }
-          break;
-        case 'CLEAR_CART':
-          setIsInCart(false);
-          break;
         case 'CART_STATE_CHANGE':
+          // Only listen to state changes, not individual add/remove events
           if (event.payload && Array.isArray(event.payload)) {
-            setIsInCart(event.payload.some((item: any) => item.id === product.id));
+            const inCart = event.payload.some((item: any) => item.id === product.id);
+            console.log(`🛒 ProductCard (${product.id}): isInCart = ${inCart}`);
+            setIsInCart(inCart);
           }
           break;
       }
     });
 
-    // Request current auth and cart state on mount
-    eventBus.emit({ type: 'AUTH_STATE_CHANGE', payload: 'REQUEST_STATE' });
-    eventBus.emit({ type: 'CART_STATE_CHANGE', payload: 'REQUEST_STATE' });
-
     return () => {
-      authSubscription.unsubscribe();
       cartSubscription.unsubscribe();
     };
   }, [product.id]);
 
   const handleAddToCart = () => {
-    if (token) {
+    if (token && !isInCart) {
+      console.log(`➕ ProductCard: Adding ${product.title} to cart`);
       eventBus.emit({ type: 'ADD_TO_CART', payload: product });
     }
   };
@@ -88,14 +65,14 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <p style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#007bff' }}>${product.price}</p>
       <button
         onClick={handleAddToCart}
-        // disabled={isInCart || !token}
+        disabled={isInCart || !token}
         style={{
           backgroundColor: isInCart ? '#6c757d' : '#28a745',
           color: 'white',
           border: 'none',
           padding: '0.5rem 1rem',
           borderRadius: '4px',
-          // cursor: isInCart || !token ? 'not-allowed' : 'pointer'
+          cursor: isInCart || !token ? 'not-allowed' : 'pointer'
         }}
       >
         {isInCart ? 'In Cart' : 'Add to Cart'}

@@ -10,49 +10,55 @@ interface CartItem {
 
 const Cart: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
+    console.log('🎬 Cart: Initializing...');
+    
     // Subscribe to cart events
     const subscription = eventBus.onCart().subscribe((event: any) => {
+      console.log('📥 Cart: Received cart event:', event.type, event.payload);
+      
+      // Ignore REQUEST_STATE events (these are from other MFs)
+      if (event.payload === 'REQUEST_STATE') {
+        return;
+      }
+      
       switch (event.type) {
-        case 'ADD_TO_CART':
-          setCartItems(prev => {
-            const existing = prev.find(item => item.id === event.payload.id);
-            if (!existing) {
-              return [...prev, event.payload];
-            }
-            return prev;
-          });
-          break;
-        case 'REMOVE_FROM_CART':
-          setCartItems(prev => prev.filter(item => item.id !== event.payload));
-          break;
-        case 'CLEAR_CART':
-          setCartItems([]);
-          break;
         case 'CART_STATE_CHANGE':
           if (Array.isArray(event.payload)) {
+            console.log('🛒 Cart: Updating cart items:', event.payload.length, 'items');
             setCartItems(event.payload);
+            setIsReady(true);
           }
           break;
       }
     });
 
-    // Request current cart state on mount
-    eventBus.emit({ type: 'CART_STATE_CHANGE', payload: 'REQUEST_STATE' });
+    // Request current cart state on mount with delay
+    setTimeout(() => {
+      console.log('📤 Cart: Requesting cart state...');
+      eventBus.emit({ type: 'CART_STATE_CHANGE', payload: 'REQUEST_STATE' });
+    }, 50);
 
     return () => subscription.unsubscribe();
   }, []);
 
   const handleRemoveFromCart = (itemId: number) => {
+    console.log('🗑️ Cart: Requesting removal of item:', itemId);
     eventBus.emit({ type: 'REMOVE_FROM_CART', payload: itemId });
   };
 
   const handleClearCart = () => {
+    console.log('🗑️ Cart: Requesting clear cart');
     eventBus.emit({ type: 'CLEAR_CART' });
   };
 
   const totalPrice = cartItems.reduce((sum, item) => sum + item.price, 0);
+
+  if (!isReady) {
+    return <div>Loading cart...</div>;
+  }
 
   return (
     <div>
