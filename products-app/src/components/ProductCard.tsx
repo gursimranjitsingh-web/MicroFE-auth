@@ -88,14 +88,14 @@ const ProductCard = ({ product }: ProductCardProps) => {
       <p style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#007bff' }}>${product.price}</p>
       <button
         onClick={handleAddToCart}
-        disabled={isInCart || !token}
+        // disabled={isInCart || !token}
         style={{
           backgroundColor: isInCart ? '#6c757d' : '#28a745',
           color: 'white',
           border: 'none',
           padding: '0.5rem 1rem',
           borderRadius: '4px',
-          cursor: isInCart || !token ? 'not-allowed' : 'pointer'
+          // cursor: isInCart || !token ? 'not-allowed' : 'pointer'
         }}
       >
         {isInCart ? 'In Cart' : 'Add to Cart'}
