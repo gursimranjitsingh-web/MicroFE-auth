@@ -44,10 +44,10 @@ const ProductsApp: React.FC = () => {
     });
 
     // Request current auth state on mount
-    setTimeout(() => {
+    // setTimeout(() => {
       console.log('📤 ProductsApp: Requesting auth state...');
       eventBus.emit({ type: 'AUTH_STATE_CHANGE', payload: 'REQUEST_STATE' });
-    }, 50);
+    // }, 50);
 
     return () => subscription.unsubscribe();
   }, []);
