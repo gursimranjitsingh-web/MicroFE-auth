@@ -36,7 +36,7 @@ class AuthService {
     });
 
     // Emit initial state after a short delay to ensure all MFs are ready
-    setTimeout(() => {
+    // setTimeout(() => {
       if (!this.hasEmittedInitialState) {
         const state = store.getState();
         console.log('🎬 Initial auth state broadcast:', state.auth);
@@ -46,7 +46,7 @@ class AuthService {
         });
         this.hasEmittedInitialState = true;
       }
-    }, 100);
+    // }, 100);
   }
 
   public login(): void {

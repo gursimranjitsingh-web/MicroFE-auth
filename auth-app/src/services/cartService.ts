@@ -42,10 +42,10 @@ class CartService {
     });
 
     // Emit initial empty cart state after a short delay
-    setTimeout(() => {
+    // setTimeout(() => {
       console.log('🎬 Initial cart state broadcast: empty');
       this.broadcastCartState();
-    }, 100);
+    // }, 100);
   }
 
   private addToCart(product: Product): void {
