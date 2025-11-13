@@ -13,9 +13,9 @@ export default defineConfig({
         authApp: 'http://localhost:5000/assets/remoteEntry.js',
       },
       exposes: {
-        './ProductsApp': './src/ProductsApp.tsx',
+        './ProductsApp': './src/App.tsx',
       },
-      shared: ['react', 'react-dom', 'react-redux', '@reduxjs/toolkit', 'redux-persist', 'rxjs'],
+      shared: ['react', 'react-dom', 'react-redux', '@reduxjs/toolkit', 'redux-persist', 'rxjs','@apollo/client'],
     }),
   ],
   build: {

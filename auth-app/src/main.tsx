@@ -7,12 +7,16 @@ import App from './App.tsx'
 // Initialize services
 import './services/authService'
 import './services/cartService'
+// import { ApolloProvider } from "@apollo/client"
+// import client from "./apollo/index.ts"
 
 createRoot(document.getElementById('root')!).render(
   <>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <App />
+        {/* <ApolloProvider client={client}> */}
+          <App />
+        {/* </ApolloProvider> */}
       </PersistGate>
     </Provider>
   </>,

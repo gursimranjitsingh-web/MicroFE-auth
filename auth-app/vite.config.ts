@@ -15,8 +15,9 @@ export default defineConfig({
       },
       exposes: {
         './eventBus': './src/eventBus/index.ts',
+        './apollo':'./src/apollo/index.ts'
       },
-      shared: ['react', 'react-dom', 'react-redux', '@reduxjs/toolkit', 'redux-persist', 'rxjs'],
+      shared: ['react', 'react-dom', 'react-redux', '@reduxjs/toolkit', 'redux-persist', 'rxjs','@apollo/client'],
     }),
   ],
   build: {

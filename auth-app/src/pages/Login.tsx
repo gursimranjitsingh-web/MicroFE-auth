@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../store';
 import { login } from '../store/authSlice';
+import { useCcMe } from "../gql/auth";
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -10,6 +11,7 @@ const Login = () => {
   const navigate = useNavigate();
   const { token } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
+  const {fetcher} = useCcMe()
 
   useEffect(() => {
     if (token) {
@@ -21,6 +23,7 @@ const Login = () => {
     e.preventDefault();
     dispatch(login())
     navigate('/');
+    fetcher()
   };
 
   return (

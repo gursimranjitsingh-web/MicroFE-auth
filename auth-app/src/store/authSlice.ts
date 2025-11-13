@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
+import signInToken from '../../codegenToken';
 
-interface UserData {
+type UserData = {
   name: string;
   role: string;
   permissions: string[];
   theme: string;
-}
+}|any
 
 interface AuthState {
   token: string | null;
@@ -23,14 +24,13 @@ const authSlice = createSlice({
   reducers: {
     login: (state) => {
       // Simulate authentication
-      const token = Math.random().toString(36).substring(2) + Date.now().toString(36);
       const userData: UserData = {
         name: 'John Doe',
         role: 'user',
         permissions: ['read'],
         theme: 'light',
       };
-      state.token = token;
+      state.token = signInToken;
       state.userData = userData;
     },
     logout: (state) => {
@@ -42,8 +42,11 @@ const authSlice = createSlice({
         state.userData.name = action.payload;
       }
     },
+    setUserData:(state,{payload})=>{
+      state.userData = payload;
+    }
   },
 });
 
-export const { login, logout, updateUserData } = authSlice.actions;
+export const { login, logout, updateUserData,setUserData } = authSlice.actions;
 export default authSlice.reducer;

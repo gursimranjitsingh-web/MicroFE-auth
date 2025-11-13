@@ -8,12 +8,19 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "serve": "npm run build && npm run preview"
+    "serve": "npm run build && npm run preview",
+    "compile:codegen": "graphql-codegen",
+    "build:codegen": "npm run compile:codegen && npm run build",
+    "compile:codegen:dev": "vite --mode development && npm run compile:codegen"
   },
   "dependencies": {
+    "@apollo/client": "^3.11.10",
+    "@graphql-codegen/cli": "^5.0.3",
     "@originjs/vite-plugin-federation": "^1.4.1",
     "@reduxjs/toolkit": "^2.10.1",
     "@types/jsonwebtoken": "^9.0.10",
+    "dotenv": "^17.2.3",
+    "graphql-ws": "^5.16.0",
     "jsonwebtoken": "^9.0.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

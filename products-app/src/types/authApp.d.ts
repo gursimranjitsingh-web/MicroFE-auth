@@ -59,3 +59,9 @@ declare module 'authApp/eventBus' {
     clearCart: () => void;
   };
 }
+
+declare module 'authApp/apollo' {
+  import { ApolloClient } from '@apollo/client';
+   const apololink: ApolloClient<any>;
+   export default apololink;
+}

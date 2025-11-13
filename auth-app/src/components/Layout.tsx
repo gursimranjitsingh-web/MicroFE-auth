@@ -12,6 +12,8 @@ const LayoutContent = () => {
   const { userData } = useSelector((state: RootState) => state.auth);
   const [cartItems, setCartItems] = useState<any[]>([]);
 
+  console.log('🧑‍💼 Layout: User Data:', userData);
+
   useEffect(() => {
     // Subscribe to cart events to get cart count
     const subscription = eventBus.onCart().subscribe((event: any) => {
@@ -59,7 +61,7 @@ const LayoutContent = () => {
         display: 'flex',
         flexDirection: 'column'
       }}>
-        <h3 style={{ marginBottom: '2rem' }}>Welcome {userData?.name}</h3>
+        <h3 style={{ marginBottom: '2rem' }}>Welcome {userData?.fullName}</h3>
         <Link
           to="/"
           style={{

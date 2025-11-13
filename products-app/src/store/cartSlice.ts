@@ -10,10 +10,12 @@ interface Product {
 
 interface CartState {
   items: Product[];
+  demo:any
 }
 
 const initialState: CartState = {
   items: [],
+  demo:null
 };
 
 const cartSlice = createSlice({
@@ -29,8 +31,12 @@ const cartSlice = createSlice({
     clearCart: (state) => {
       state.items = [];
     },
+    setMaxConfig:(state,action:PayloadAction<any>)=>{
+      state.demo = action.payload;
+    }
+
   },
 });
 
-export const { addToCart, removeFromCart, clearCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, clearCart, setMaxConfig } = cartSlice.actions;
 export default cartSlice.reducer;
