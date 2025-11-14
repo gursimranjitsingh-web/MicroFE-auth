@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { eventBus } from 'authApp/eventBus';
+import { addToCart } from "../store/cartSlice";
+import { useDispatch } from "react-redux";
 
 interface Product {
   id: number;
@@ -15,6 +17,7 @@ interface ProductCardProps {
 
 const ProductCard = ({ product, token }: ProductCardProps) => {
   const [isInCart, setIsInCart] = useState(false);
+  const dispatch = useDispatch()
 
   useEffect(() => {
     // Subscribe to auth events to get token
@@ -45,6 +48,7 @@ const ProductCard = ({ product, token }: ProductCardProps) => {
   }, [product.id]);
 
   const handleAddToCart = () => {
+    dispatch(addToCart(product))
     if (token && !isInCart) {
       console.log(`➕ ProductCard: Adding ${product.title} to cart`);
       eventBus.emit({ type: 'ADD_TO_CART', payload: product });

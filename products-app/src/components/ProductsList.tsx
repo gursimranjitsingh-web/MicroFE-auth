@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
+import { useSelector } from "react-redux";
+import { RootState, store } from "../store";
 
 interface Product {
   id: number;
@@ -11,6 +13,9 @@ interface Product {
 const ProductsList = ({token}:{token:string | null}) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const state = useSelector((state:RootState)=>state.cart)
+
+  console.log(state,store.getState(),'items in product list====')
 
 
 

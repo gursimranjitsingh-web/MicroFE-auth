@@ -20,6 +20,7 @@ export const store = configureStore({
         ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
       },
     }),
+    devTools:{name:"Host Auth Store",trace: true}
 });
 
 export const persistor = persistStore(store);

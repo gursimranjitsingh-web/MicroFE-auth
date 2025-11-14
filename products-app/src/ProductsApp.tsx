@@ -2,16 +2,17 @@ import React, { useState, useEffect } from 'react';
 import ProductsList from './components/ProductsList';
 import { eventBus } from 'authApp/eventBus';
 import { useMaxConfig } from "./gql/maximizer/hooks";
-// import { useMaxConfig } from "./gql/maximizer/hooks";
+import { useSelector } from "react-redux";
+import { RootState } from "./store";
 
 const ProductsApp: React.FC = () => {
-
-  console.log(eventBus,'event bus in products app')
-
   const [userData, setUserData] = useState<any>(null);
   const [token, setToken] = useState<string | null>(null);
   const [isReady, setIsReady] = useState(false);
   const {fetchMaxConfig,maxConfigLoading} = useMaxConfig()
+  const {demo,items} = useSelector((state:RootState)=>state.cart)
+
+  console.log(demo,items,'cart--productsApp')
 
   useEffect(() => {
     console.log('🎬 ProductsApp: Initializing...');
@@ -88,6 +89,7 @@ const ProductsApp: React.FC = () => {
     <div>
       <h2>Products</h2>
       {userData && <p>Welcome, {userData?.fullName}!</p>}
+      {JSON.stringify(demo)}
       <ProductsList token={token}/>
     </div>
   );
