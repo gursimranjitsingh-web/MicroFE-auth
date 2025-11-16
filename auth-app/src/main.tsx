@@ -7,6 +7,12 @@ import App from './App.tsx'
 import './services/authService'
 import './services/cartService'
 import { lazy, Suspense } from 'react'
+
+// Dynamically import styles from UI module
+// import('ui/styles/datepicker').catch((err) =>
+//   console.warn('Failed to load datepicker styles:', err),
+// )
+
 const ThemeProvider = lazy(() => import('ui/ThemeProvider'))
 // import { ApolloProvider } from "@apollo/client"
 // import client from "./apollo/index.ts"

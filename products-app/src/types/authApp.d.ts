@@ -102,3 +102,18 @@ declare module 'ui/components' {
   export const LookIcon: FC<LookIconProps>
   export const SvgIcons: FC<SvgIconsProps>
 }
+
+declare module 'ui/styles/datepicker' {
+  const styles: any
+  export default styles
+}
+
+declare module 'ui/styles/modal' {
+  const styles: any
+  export default styles
+}
+
+declare module 'ui/styles/table' {
+  const styles: any
+  export default styles
+}

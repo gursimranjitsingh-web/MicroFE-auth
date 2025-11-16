@@ -15,6 +15,9 @@ export default defineConfig({
       exposes: {
         './ThemeProvider': './src/components/ThemeProvider.tsx',
         './components': './src/components/index.ts',
+        './styles/datepicker': './src/styles/datepicker.ts',
+        './styles/modal': './src/styles/modal.ts',
+        './styles/table': './src/styles/table.ts',
       },
       shared: [
         'react',

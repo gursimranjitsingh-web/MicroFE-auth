@@ -29,6 +29,9 @@ export default defineConfig({
   ],
   build: {
     target: 'esnext',
+    rollupOptions: {
+      external: ['ui/styles/datepicker', 'ui/styles/modal', 'ui/styles/table'],
+    },
   },
   preview: {
     port: 5174,
