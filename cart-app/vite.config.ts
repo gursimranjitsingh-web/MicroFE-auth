@@ -16,13 +16,20 @@ export default defineConfig({
       exposes: {
         './Cart': './src/Cart.tsx',
       },
-      shared: ['react', 'react-dom', 'react-redux', '@reduxjs/toolkit', 'redux-persist', 'rxjs'],
+      shared: [
+        'react',
+        'react-dom',
+        'react-redux',
+        '@reduxjs/toolkit',
+        'redux-persist',
+        'rxjs',
+      ],
     }),
   ],
   build: {
     target: 'esnext',
   },
-  preview:{
-    port: 5175
-  }
+  preview: {
+    port: 5175,
+  },
 })
