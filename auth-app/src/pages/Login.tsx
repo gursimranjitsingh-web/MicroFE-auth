@@ -1,51 +1,57 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import type { RootState } from '../store';
-import { login } from '../store/authSlice';
-import { useCcMe } from "../gql/auth";
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import type { RootState } from '../store'
+import { login } from '../store/authSlice'
+import { useCcMe } from '../gql/auth'
+import { LookButton } from 'ui/components'
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
-  const { token } = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch();
-  const {fetcher} = useCcMe()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const navigate = useNavigate()
+  const { token } = useSelector((state: RootState) => state.auth)
+  const dispatch = useDispatch()
+  const { fetcher } = useCcMe()
 
   useEffect(() => {
     if (token) {
-      navigate('/');
+      navigate('/')
     }
-  }, [token, navigate]);
+  }, [token, navigate])
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     dispatch(login())
-    navigate('/');
+    navigate('/')
     fetcher()
-  };
+  }
 
   return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '100vh',
-      backgroundColor: '#f5f5f5'
-    }}>
-      <div style={{
-        backgroundColor: 'white',
-        padding: '2rem',
-        borderRadius: '8px',
-        boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-        width: '100%',
-        maxWidth: '400px'
-      }}>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+      }}
+    >
+      <div
+        style={{
+          backgroundColor: 'white',
+          padding: '2rem',
+          borderRadius: '8px',
+          boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+          width: '100%',
+          maxWidth: '400px',
+        }}
+      >
         <h2 style={{ textAlign: 'center', marginBottom: '1.5rem' }}>Login</h2>
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: '1rem' }}>
-            <label style={{ display: 'block', marginBottom: '0.5rem' }}>Email:</label>
+            <label style={{ display: 'block', marginBottom: '0.5rem' }}>
+              Email:
+            </label>
             <input
               type="email"
               value={email}
@@ -56,12 +62,14 @@ const Login = () => {
                 padding: '0.75rem',
                 border: '1px solid #ddd',
                 borderRadius: '4px',
-                fontSize: '1rem'
+                fontSize: '1rem',
               }}
             />
           </div>
           <div style={{ marginBottom: '1.5rem' }}>
-            <label style={{ display: 'block', marginBottom: '0.5rem' }}>Password:</label>
+            <label style={{ display: 'block', marginBottom: '0.5rem' }}>
+              Password:
+            </label>
             <input
               type="password"
               value={password}
@@ -72,32 +80,26 @@ const Login = () => {
                 padding: '0.75rem',
                 border: '1px solid #ddd',
                 borderRadius: '4px',
-                fontSize: '1rem'
+                fontSize: '1rem',
               }}
             />
           </div>
-          <button
-            type="submit"
-            style={{
-              width: '100%',
-              padding: '0.75rem',
-              backgroundColor: '#007bff',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              fontSize: '1rem',
-              cursor: 'pointer'
-            }}
-          >
-            Login
-          </button>
+          <LookButton
+            icon="FilterOutlined"
+            htmlType="submit"
+            type="primary"
+            label="Login"
+          />
         </form>
         <p style={{ textAlign: 'center', marginTop: '1rem' }}>
-          Don't have an account? <a href="/signup" style={{ color: '#007bff' }}>Sign up</a>
+          Don't have an account?{' '}
+          <a href="/signup" style={{ color: '#007bff' }}>
+            Sign up
+          </a>
         </p>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

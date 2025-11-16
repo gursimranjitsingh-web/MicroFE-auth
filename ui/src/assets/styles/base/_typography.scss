@@ -1,0 +1,146 @@
+body {
+  a.inherit-style,
+  a.inherit-style:hover {
+    font-size: inherit;
+    color: inherit;
+    text-decoration: inherit;
+  }
+  .grayscale {
+    filter: grayscale(1);
+  }
+}
+// ant classes overide
+h4.ant-typography {
+  color: var(--text-secondary);
+}
+
+.ant-dropdown-open.ant-btn-text:not(:disabled):not(.ant-btn-disabled) {
+  color: var(--text-primary);
+  background: var(--border-color);
+}
+
+.ant-table-cell:first-child {
+  &:not(.ant-table-selection-column) {
+    padding-left: 16px !important;
+  }
+  &.ant-table-cell-with-append {
+    display: table-cell;
+    padding-left: 0px !important;
+  }
+}
+
+.bk-quaternary {
+  background-color: var(--light-bg);
+  border: 0 !important;
+}
+
+.ant-form-item-explain.ant-form-item-explain-connected {
+  min-height: 22px;
+}
+.ant-form-item-explain-error::first-letter {
+  text-transform: uppercase;
+}
+// TODO: below code can be removed
+.heading {
+  font-weight: 600;
+  &-2 {
+    font-size: 30px;
+    line-height: 38px;
+  }
+
+  &-3 {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  &-4 {
+    font-size: 20px;
+    line-height: 28px;
+  }
+}
+.error-message {
+  color: var(--danger-color);
+  &::first-letter {
+    text-transform: uppercase;
+  }
+}
+
+.text {
+  // for text alignment
+  &-left {
+    text-align: left;
+  }
+  &-center {
+    text-align: center;
+  }
+  &-right {
+    text-align: right;
+  }
+  // for text transform
+  &-capitalize {
+    text-transform: capitalize;
+  }
+  &-uppercase {
+    text-transform: uppercase;
+  }
+  // for text color
+  &-white {
+    color: var(--white);
+  }
+  &-black {
+    color: var(--black);
+  }
+  &-dark {
+    color: var(--text-primary);
+  }
+  &-blue {
+    color: var(--blue-text);
+  }
+  &-primary {
+    color: var(--primary);
+  }
+  &-secondary {
+    color: var(--text-secondary);
+  }
+  &-tertiary {
+    color: var(--text-tertiary);
+  }
+  &-green {
+    color: var(--green-color);
+  }
+  &-danger {
+    color: var(--danger-color);
+  }
+  &-warning {
+    color: var(--warning-color);
+  }
+  &-xs {
+    font-size: var(--font-size-xs);
+    line-height: 20px;
+  }
+  &-nowrap {
+    text-wrap: nowrap;
+  }
+  &-transparent {
+    color: transparent;
+  }
+  &-underline {
+    text-decoration: underline;
+  }
+}
+.float {
+  &-left {
+    float: left;
+  }
+  &-right {
+    float: right;
+  }
+}
+.word-break-all {
+  word-break: break-all;
+}
+pre {
+  font-family: var(--font-family-inter);
+  margin: 0;
+  padding: 0;
+}

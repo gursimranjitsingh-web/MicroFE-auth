@@ -1,0 +1,49 @@
+// base
+@use './base/variables';
+@use './base/dark-theme';
+@use './base/mixins';
+@use './base/style';
+@use './base/typography';
+@use './base/util';
+// layouts
+@use './layout/layout';
+
+// components
+// @use "./components/ag-grid";
+// @use "./components/bug-report";
+// @use "./components/bulk-action";
+// @use "./components/custom-tooltip";
+// @use "./components/editor";
+// @use "./components/drawer";
+// @use "./components/modal";
+// @use "./components/shimmer";
+// @use "./components/table";
+// @use "./components/tag";
+// @use "./components/uploader";
+// @use "./components/datepicker";
+// @use "./components/sortable";
+// @use "./components/HelpAndSupport/request-history";
+// @use "./components/tour";
+// @use "./components/reactEasyCrop";
+// @use "./components/advanced-filter";
+// @use "./components/grapejs"; // Fixed: Remove the .scss extension and underscore
+// @use "./components/periodicDropdown";
+
+// pages
+// @use './pages/funnel-engine';
+// @use './pages/creative-lib';
+// @use './pages/dashboard';
+// @use './pages/fms';
+// @use './pages/integrations';
+// @use './pages/launch';
+// @use './pages/nexus';
+// @use './pages/notification';
+// @use './pages/setting';
+// @use './pages/ums';
+// @use './pages/unified-report';
+// @use './pages/faqs';
+// @use './pages/download-app';
+// @use './pages/channel-management';
+// @use './pages/new-updates';
+// @use './pages/lp-builder';
+// @use './pages/ad-genesis';

@@ -12,18 +12,29 @@ export default defineConfig({
       remotes: {
         productsApp: 'http://localhost:5174/assets/remoteEntry.js',
         cartApp: 'http://localhost:5175/assets/remoteEntry.js',
+        ui: 'http://localhost:5888/assets/remoteEntry.js',
       },
       exposes: {
         './eventBus': './src/eventBus/index.ts',
-        './apollo':'./src/apollo/index.ts'
+        './apollo': './src/apollo/index.ts',
       },
-      shared: ['react', 'react-dom', 'react-redux', '@reduxjs/toolkit', 'redux-persist', 'rxjs','@apollo/client'],
+      shared: [
+        'react',
+        'react-dom',
+        'react-redux',
+        '@reduxjs/toolkit',
+        'redux-persist',
+        'rxjs',
+        '@apollo/client',
+        'antd',
+        'sass',
+      ],
     }),
   ],
   build: {
     target: 'esnext',
   },
-  preview:{
-    port:5000
-  }
+  preview: {
+    port: 5000,
+  },
 })

@@ -11,6 +11,7 @@ export default defineConfig({
       filename: 'remoteEntry.js',
       remotes: {
         authApp: 'http://localhost:5000/assets/remoteEntry.js',
+        ui: 'http://localhost:5888/assets/remoteEntry.js',
       },
       exposes: {
         './Cart': './src/Cart.tsx',

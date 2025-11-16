@@ -1,22 +1,26 @@
-import { createSlice } from '@reduxjs/toolkit';
-import signInToken from '../../codegenToken';
+import { createSlice } from '@reduxjs/toolkit'
+import signInToken from '../../codegenToken'
 
-type UserData = {
-  name: string;
-  role: string;
-  permissions: string[];
-  theme: string;
-}|any
+type UserData =
+  | {
+      name: string
+      role: string
+      permissions: string[]
+      theme: string
+    }
+  | any
 
 interface AuthState {
-  token: string | null;
-  userData: UserData | null;
+  token: string | null
+  userData: UserData | null
+  theme: string
 }
 
 const initialState: AuthState = {
   token: null,
   userData: null,
-};
+  theme: 'dark',
+}
 
 const authSlice = createSlice({
   name: 'auth',
@@ -29,24 +33,29 @@ const authSlice = createSlice({
         role: 'user',
         permissions: ['read'],
         theme: 'light',
-      };
-      state.token = signInToken;
-      state.userData = userData;
+      }
+      state.token = signInToken
+      state.userData = userData
     },
     logout: (state) => {
-      state.token = null;
-      state.userData = null;
+      console.log(state)
+      // state.token = null;
+      // state.userData = null;
     },
     updateUserData: (state, action) => {
       if (state.userData) {
-        state.userData.name = action.payload;
+        state.userData.name = action.payload
       }
     },
-    setUserData:(state,{payload})=>{
-      state.userData = payload;
-    }
+    setUserData: (state, { payload }) => {
+      state.userData = payload
+    },
+    setTheme: (state, { payload }) => {
+      state.theme = payload
+    },
   },
-});
+})
 
-export const { login, logout, updateUserData,setUserData } = authSlice.actions;
-export default authSlice.reducer;
+export const { login, logout, updateUserData, setUserData, setTheme } =
+  authSlice.actions
+export default authSlice.reducer

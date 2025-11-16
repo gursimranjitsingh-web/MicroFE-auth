@@ -1,0 +1,308 @@
+@use "sass:map";
+@use "sass:list";
+
+// Mixin for width and height in percentages
+@mixin set-size-per($direction) {
+  @for $i from 0 through 10 {
+    $size: $i * 10;
+    @if $direction == width {
+      .w-#{$size} {
+        width: $size * 1%;
+        &-imp {
+          width: $size * 1% !important;
+        }
+      }
+    } @else if $direction == height {
+      .h-#{$size} {
+        height: $size * 1%;
+        &-imp {
+          height: $size * 1% !important;
+        }
+      }
+    }
+  }
+}
+
+// Mixin for font size
+@mixin set-font-size($size) {
+  .f-#{$size} {
+    font-size: #{$size}px;
+    &-imp {
+      font-size: #{$size}px !important;
+    }
+  }
+}
+
+@mixin font-weight($weight) {
+  $sizes: (
+    regular: 400,
+    medium: 500,
+    semibold: 600,
+    bold: 700,
+  );
+  font-weight: ($weight);
+  .font-weight-#{$weight} {
+    font-weight: map.get($sizes, $weight);
+  }
+}
+
+// Mixin for padding and margin
+@mixin space($space, $breakpoint: "", $imp: "") {
+  @if $breakpoint != "" {
+    $breakpoint: $breakpoint + "-";
+  }
+  $important: "";
+  @if $imp!= "" {
+    $important: "-" + #{$imp};
+  }
+  .p-#{$breakpoint}#{$space}#{$important} {
+    @if $imp!= "" {
+      padding: #{$space}px !important;
+    } @else {
+      padding: #{$space}px;
+    }
+  }
+  .pl-#{$breakpoint}#{$space}#{$important},
+  .px-#{$breakpoint}#{$space}#{$important} {
+    @if $imp!= "" {
+      padding-left: #{$space}px !important;
+    } @else {
+      padding-left: #{$space}px;
+    }
+  }
+  .pr-#{$breakpoint}#{$space}#{$important},
+  .px-#{$breakpoint}#{$space}#{$important} {
+    @if $imp!= "" {
+      padding-right: #{$space}px !important;
+    } @else {
+      padding-right: #{$space}px;
+    }
+  }
+  .pt-#{$breakpoint}#{$space}#{$important},
+  .py-#{$breakpoint}#{$space}#{$important} {
+    @if $imp!= "" {
+      padding-top: #{$space}px !important;
+    } @else {
+      padding-top: #{$space}px;
+    }
+  }
+  .pb-#{$breakpoint}#{$space}#{$important},
+  .py-#{$breakpoint}#{$space}#{$important} {
+    @if $imp!= "" {
+      padding-bottom: #{$space}px !important;
+    } @else {
+      padding-bottom: #{$space}px;
+    }
+  }
+  @if $space == auto {
+    .m-#{$breakpoint}#{$space} {
+      margin: $space;
+    }
+    .ml-#{$breakpoint}#{$space},
+    .mx-#{$breakpoint}#{$space} {
+      margin-left: $space;
+    }
+    .mr-#{$breakpoint}#{$space},
+    .mx-#{$breakpoint}#{$space} {
+      margin-right: $space;
+    }
+    .mt-#{$breakpoint}#{$space},
+    .my-#{$breakpoint}#{$space} {
+      margin-top: $space;
+    }
+    .mb-#{$breakpoint}#{$space},
+    .my-#{$breakpoint}#{$space} {
+      margin-bottom: $space;
+    }
+  } @else {
+    .m-#{$breakpoint}#{$space}#{$important} {
+      @if $imp!= "" {
+        margin: #{$space}px !important;
+      } @else {
+        margin: #{$space}px;
+      }
+    }
+    .ml-#{$breakpoint}#{$space}#{$important},
+    .mx-#{$breakpoint}#{$space}#{$important} {
+      @if $imp!= "" {
+        margin-left: #{$space}px !important;
+      } @else {
+        margin-left: #{$space}px;
+      }
+    }
+    .mr-#{$breakpoint}#{$space}#{$important},
+    .mx-#{$breakpoint}#{$space}#{$important} {
+      @if $imp!= "" {
+        margin-right: #{$space}px !important;
+      } @else {
+        margin-right: #{$space}px;
+      }
+    }
+    .mt-#{$breakpoint}#{$space}#{$important},
+    .my-#{$breakpoint}#{$space}#{$important} {
+      @if $imp!= "" {
+        margin-top: #{$space}px !important;
+      } @else {
+        margin-top: #{$space}px;
+      }
+    }
+    .mb-#{$breakpoint}#{$space}#{$important},
+    .my-#{$breakpoint}#{$space}#{$important} {
+      @if $imp!= "" {
+        margin-bottom: #{$space}px !important;
+      } @else {
+        margin-bottom: #{$space}px;
+      }
+    }
+  }
+}
+
+// Mixin for text alignment
+@mixin text-align($alignment, $breakpoint: "") {
+  $bp: if($breakpoint != "", $breakpoint + "-", "");
+
+  .text-#{$bp}align-#{$alignment} {
+    text-align: $alignment;
+  }
+}
+
+@mixin creative-image-hover {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 12px;
+  background-color: var(--bk-clr);
+  box-sizing: border-box;
+  .file-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--white-all);
+    font-weight: 600;
+    font-size: 16px;
+  }
+}
+
+// Mixin for handling media queries
+@mixin media-query($type, $size...) {
+  $sizes: (
+    xs: 576px,
+    // Extra small devices
+    sm: 768px,
+    // Small devices
+    md: 992px,
+    // Medium devices
+    lg: 1200px,
+    // Large devices
+    xl: 1441px,
+    // Extra large devicesc
+    xxl: 1921px,
+    // Extra extra large devices
+  );
+  // For a minimum width of the specified size
+  @if $type == min {
+    @media screen and (min-width: map.get($sizes, list.nth($size, 1))) {
+      @content;
+    }
+  }
+  // For a maximum width (minus 1px) of the specified size
+  @else if $type == max {
+    @media screen and (max-width: ( map.get($sizes, list.nth($size, 1)) - 1px)) {
+      @content;
+    }
+  }
+  // Condition to handle the 'between' two type of media query
+  @else if $type == between {
+    @media screen and (min-width: map.get($sizes, list.nth($size, 1))) and (max-width: ( map.get($sizes, list.nth($size, 2)) - 1px)) {
+      @content;
+    }
+  }
+}
+// TODO: Here the example for how to write media query
+// For (min-width: 768px)
+// @include media-query(min, sm) {
+//   width: 100%;
+// }
+// For (max-width: 767px)
+// @include media-query(max, sm) {
+//   width: 80%;
+// }
+// For (768px to 1199px - min to max)
+// @include media-query(between, md, xl) {
+//   width: 60%;
+// }
+
+// Mixin for custom scrollbar
+@mixin customScrollbar() {
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    position: absolute;
+    right: 0;
+    background-color: transparent;
+    opacity: 0;
+  }
+  &::-webkit-scrollbar-thumb {
+    opacity: 0;
+    border-radius: 20px;
+    background-color: transparent;
+    transition: opacity 0.4s;
+  }
+
+  &:hover {
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      opacity: 1;
+      background-color: var(--lite-silver);
+      transition: opacity 0.4s;
+    }
+  }
+}
+
+// Mixin for scrollbar hide
+@mixin ScrollbarHide() {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// Mixin for width & height
+// It takes three arguments: $type, $values, $property
+// $type (for w or h) means width and height
+// $values (the list of values) like value in pixels
+// $property - Specifies a CSS property such as width, min-width, height, or max-height.
+
+@mixin generate-dimension-classes($type, $values, $property) {
+  @each $value in $values {
+    // Generate standard class for width/height (e.g., .w-10px or .h-10px)
+    .#{$type}-#{$value} {
+      #{$property}: #{$value};
+      // Generate the !important variant for the dimension class (e.g., .w-10px-imp or .h-10px-imp)
+      &-imp {
+        #{$property}: #{$value} !important;
+      }
+    }
+    // Generate min-width/min-height class (e.g., .min-w-10px or .min-h-10px)
+    .min-#{$type}-#{$value} {
+      min-#{$property}: #{$value};
+      // Generate the !important variant for the min-width/min-height class (e.g., .min-w-10px-imp or .min-h-10px-imp)
+      &-imp {
+        min-#{$property}: #{$value} !important;
+      }
+    }
+    // Generate max-width/max-height class (e.g., .max-w-10px or .max-h-10px)
+    .max-#{$type}-#{$value} {
+      max-#{$property}: #{$value};
+      // Generate the !important variant for the max-width/max-height class (e.g., .max-w-10px-imp or .max-h-10px-imp)
+      &-imp {
+        max-#{$property}: #{$value} !important;
+      }
+    }
+  }
+}

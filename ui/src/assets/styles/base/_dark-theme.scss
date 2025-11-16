@@ -1,0 +1,169 @@
+@use "../base/variables" as *;
+[data-theme="dark"] {
+  input {
+    color-scheme: dark;
+    &:-internal-autofill-selected {
+      background: inherit !important;
+    }
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:focus {
+      transition: background-color 0s 600000s, color 0s 600000s !important;
+    }
+    &:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+    }
+  }
+
+  .ant-form-item {
+    margin-bottom: 0 !important;
+  }
+  .bg-lite-grey,
+  .ant-drawer .look-drawer-body {
+    background: transparent;
+  }
+
+  .ant-btn-primary.ant-btn-dangerous {
+    color: var(--black);
+    &:hover {
+      color: var(--black) !important;
+    }
+  }
+
+  .ant-modal-confirm {
+    & .ant-modal-content {
+      background-color: var(--modal-bg);
+      color: var(--black);
+    }
+    &-title {
+      color: var(--black);
+    }
+    & .ant-typography {
+      color: var(--black);
+    }
+    & .ant-btn-default {
+      border-color: var(--gray-6);
+      background: transparent;
+      color: var(--black-85);
+      box-shadow: 0 2px 0 var(--lite-grey-3);
+      &:hover {
+        border-color: var(--text-tertiary);
+        color: var(--black);
+        background: transparent;
+      }
+    }
+    .ant-modal-close-x {
+      color: var(--black);
+    }
+  }
+  .ant-select-disabled {
+    background: var(--disable-bg);
+    border-radius: 6px;
+  }
+  .ant-cascader.ant-select-disabled {
+    border-radius: 4px 0px 0px 4px;
+  }
+  .ant-input-disabled,
+  .ant-input-number-disabled {
+    background: var(--disable-bg);
+  }
+  .#{$prefix} {
+    &-report-date-picker {
+      &-input {
+        border: 1px solid var(--lite-silver);
+        border-radius: 8px;
+        cursor: pointer;
+        &:hover,
+        &:active,
+        &:focus {
+          border-color: var(--border-color);
+        }
+      }
+    }
+  }
+  .ant-input-filled:focus,
+  .ant-input-filled:focus-within {
+    border-color: var(--primary);
+  }
+  .taboola-fill-white {
+    & path {
+      fill: var(--black);
+    }
+  }
+  .look-phone-input-lib {
+    &.react-tel-input {
+      & .special-label,
+      & .form-control,
+      & .flag-dropdown,
+      & .selected-flag:hover,
+      & .selected-flag:focus,
+      & .flag-dropdown.open,
+      & .flag-dropdown.open .selected-flag {
+        background: transparent;
+      }
+      & .form-control,
+      & .flag-dropdown {
+        border-color: var(--gray-6);
+      }
+      & .flag-dropdown.open {
+        border-radius: 3px 0px 0px 3px;
+      }
+      & .country-list {
+        background: var(--country-list-bg);
+        border-radius: 8px;
+        & .country {
+          &:hover,
+          &.highlight {
+            background: var(--country-list-highlight-bg);
+          }
+        }
+      }
+    }
+  }
+
+  .ant-radio-wrapper .ant-radio-checked .ant-radio-inner {
+    background: var(--primary);
+  }
+  .ant-menu-dark.ant-menu-submenu-popup > .ant-menu,
+  .ant-menu-dark > .ant-menu.ant-menu-submenu-popup > .ant-menu {
+    background: var(--country-list-bg);
+    .ant-menu-item:hover {
+      color: var(--primary);
+      background-color: var(--primary-hover) !important;
+      border-radius: 5px;
+    }
+  }
+
+  .ant-select-dropdown {
+    background: var(--select-dropdown-bg);
+  }
+  .ant-slider:hover .ant-slider-handle::after {
+    box-shadow: 0 0 0 2px var(--primary);
+  }
+  :where(.ant-drawer-right) {
+    & .ant-tabs-top > .ant-tabs-nav::before,
+    & .ant-tabs-bottom > .ant-tabs-nav::before,
+    & .ant-tabs-top > div > .ant-tabs-nav::before,
+    & .ant-tabs-bottom > div > .ant-tabs-nav::before,
+    & .ant-table-wrapper .ant-table-summary > tr > th,
+    & .ant-table-wrapper .ant-table-summary > tr > td,
+    & .ant-table-wrapper .ant-table-tbody > tr > th,
+    & .ant-table-wrapper .ant-table-tbody > tr > td,
+    & .ant-table-wrapper .ant-table-thead > tr > th,
+    & .ant-table-wrapper .ant-table-thead > tr > td,
+    & .look-report-date-picker,
+    &
+      .ant-select-outlined:not(.ant-select-customize-input)
+      .ant-select-selector,
+    & .table-wrapper .table-pagination-wrapper {
+      border-color: var(--drawer-border-color) !important;
+    }
+    & .ant-picker-dropdown .ant-picker-panel-container {
+      border: 1px solid var(--drawer-border-color) !important;
+      background: var(--layout-bg) !important;
+    }
+    & .ant-popover .ant-popover-inner {
+      background: var(--layout-bg) !important;
+    }
+  }
+}

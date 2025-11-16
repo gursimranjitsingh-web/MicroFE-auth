@@ -11,17 +11,26 @@ export default defineConfig({
       filename: 'remoteEntry.js',
       remotes: {
         authApp: 'http://localhost:5000/assets/remoteEntry.js',
+        ui: 'http://localhost:5888/assets/remoteEntry.js',
       },
       exposes: {
         './ProductsApp': './src/App.tsx',
       },
-      shared: ['react', 'react-dom', 'react-redux', '@reduxjs/toolkit', 'redux-persist', 'rxjs','@apollo/client'],
+      shared: [
+        'react',
+        'react-dom',
+        'react-redux',
+        '@reduxjs/toolkit',
+        'redux-persist',
+        'rxjs',
+        '@apollo/client',
+      ],
     }),
   ],
   build: {
     target: 'esnext',
   },
-  preview:{
-    port: 5174
-  }
+  preview: {
+    port: 5174,
+  },
 })

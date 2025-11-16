@@ -1,0 +1,231 @@
+// * IMP: we need to sync these variables with /src/components/ui/ThemeProvider.tsx
+
+$prefix: "look"; //Global prefix use for custom component and override css
+
+/* Table Page variables */
+$groupReportIndentSize: 32px;
+$dark: "-dark";
+
+:root {
+  // Base Colors
+  --white: #fff;
+  --black: #000;
+  --primary: #10b346;
+  --primary-light: #ebf5fa;
+  --danger-color: #ff4d4f;
+  --green-color: #52c41a;
+  --warning-color: #faad14;
+  --blue-text: #3399cc;
+  --white-2: rgba(255, 255, 255, 0.65);
+  --white-all: #fff; // for dark and light both theme
+
+  // Grays
+  --gray-5: #303030;
+  --gray-6: #424242;
+  --lite-grey: #f0f0f0;
+  --lite-grey-2: rgba(0, 0, 0, 0.07);
+  --lite-grey-3: rgba(0, 0, 0, 0.04);
+  --white-grey: #eee;
+  --suva-grey: #888;
+
+  // Text Colors
+  --text-primary: rgba(0, 0, 0, 0.88);
+  --text-secondary: rgba(0, 0, 0, 0.65);
+  --text-tertiary: rgba(0, 0, 0, 0.45);
+  --color-text: rgba(0, 0, 0, 0.878);
+  --disabled-color: #9a9797;
+  --black-85: rgba(0, 0, 0, 0.85);
+  --link-color: #1890ff;
+
+  // Backgrounds
+  --color-bg-layout: #f5f5f5;
+  --light-bg: rgba(0, 0, 0, 0.02);
+  --light-green: #f6ffed;
+  --light-red: #fff2f0;
+  --light-red-2: #ffa39e;
+  --summary-shadow-color: rgba(0, 0, 0, 0.2);
+  --bk-clr: rgba(0, 0, 0, 0.38);
+  --black-bk: rgb(0, 0, 0, 0.5);
+  --lite-black: rgba(0, 0, 0, 0.15);
+  --color-bg-container: #141414;
+
+  // layouts height
+  --header-height: 50px;
+  --table-pagination-height: 52px;
+  --tab-bottom-margin: 6px;
+
+  // Border Colors
+  --border-color: rgba(0, 0, 0, 0.06);
+  --primary-hover: #232915;
+
+  // Shadows
+  $editor-shadow: 0px 0.25px 0.75px 0px rgba(0, 0, 0, 0.05),
+    0px 0.6px 1.8px 0px rgba(0, 0, 0, 0.07),
+    0px 1.13px 3.38px 0px rgba(0, 0, 0, 0.09),
+    0px 2.01px 6.03px 0px rgba(0, 0, 0, 0.11),
+    0px 3.76px 11.28px 0px rgba(0, 0, 0, 0.13),
+    0px 9px 27px 0px rgba(0, 0, 0, 0.18);
+  --shadow-color: 0px 9px 28px 8px #0000000d, 0px 3px 6px -4px #0000001f,
+    0px 6px 16px 0px #00000014;
+  --shadow-primary: rgba(0, 0, 0, 0.1);
+  --bulk-action-shadow: 0px 6px 16px 0px rgba(0, 0, 0, 0.08),
+    0px 3px 6px -4px rgba(0, 0, 0, 0.12), 0px 9px 28px 8px rgba(0, 0, 0, 0.05);
+
+  // Typography
+  --font-size-xs: 12px;
+
+  // Z-Index
+  --z-index-99: 99;
+  --z-index-999: 999;
+
+  // Component-Specific Variables
+  --lite-silver: #d9d9d9;
+  --complementary-white-1: #fefefe;
+  --complementary-white-2: #f9f9f9;
+
+  /* Table Page variables */
+  --table-row-selected-header-bg: #fafafa;
+  --td-border-color: #f0f0f0;
+
+  /* FMS Page variables */
+  --top-navbar-height: 50px;
+  --footer-height: 64px;
+  --page-padding: 24px;
+
+  /* UMS Page variables */
+  --ums-page-header-height: 43px;
+  --ums-card-padding: 16px;
+  --ums-tab-top-padding: 12px;
+  --ums-tab-bottom-marging: 16px;
+  --ums-search-height: 34px;
+  --ums-tabs-height: 46px;
+  --ums-search-margin: 16px;
+  --ums-page-bottom-padding: 15px;
+
+  // Drawer css variables
+  --drawer-header-height: 47.5px;
+  --drawer-body-padding: 16px;
+  --drawer-footer-height: 53px;
+  --drawer-border-size: 2px;
+
+  // Social Colors
+  --facebook-social: #1877f2;
+  --product-tag-color: #ff7722;
+  --taboola-social: #00659f;
+
+  // Social Colors for dark theme
+  --social-btn-bg: #121212;
+  --google-color: #e3e3e3;
+  --google-border: #8e918f;
+  --tiktok-color: #161823;
+
+  // alert icons colors
+  --success-icon-color: #52c41a;
+  --info-icon-color: var(--primary);
+  --warning-icon-color: #faad14;
+  --error-icon-color: #ff4d4f;
+
+  --notification-popover-width: 420px;
+  --editor-hover-color: rgba(0, 0, 0, 0.05);
+  --scrollbar-color: #515151;
+
+  --gray-bg: #1d1d1d;
+
+  --indent-size: #{$groupReportIndentSize};
+
+  --aside-width: 240px;
+  body {
+    &.sidebar-collapsed {
+      --aside-width: 64px;
+    }
+  }
+  --gray-7: #f3f3f3;
+
+  --font-family-inter: "Inter", Roboto, "Helvetica Neue";
+  --light-red-3: #2f1c1b;
+  --bg-color: rgba(0, 0, 0, 0.04);
+  --bg-color-1: #fafafa;
+}
+[data-theme="dark"] {
+  --black: #fff;
+  --white: #121212;
+  --layout-bg: #121212;
+  --text-secondary: rgba(255, 255, 255, 0.65);
+  --primary-hover: #112017;
+  --text-tertiary: rgba(255, 255, 255, 0.45);
+  --text-primary: rgba(255, 255, 255, 0.88);
+  --text-primary-black: rgba(0, 0, 0, 0.88);
+  --border-color: rgba(255, 255, 255, 0.12);
+  --modal-bg: #141414;
+  --bulk-action-bg: #303030;
+  --border-color-1: #303030;
+  --white-grey: #121212;
+  --table-row-selected-header-bg: #1d1d1d;
+  --complementary-white-1: transparent;
+  --color-text: rgba(255, 255, 255, 0.878);
+  --black-85: rgba(255, 255, 255, 0.85);
+  --lite-grey-3: rgba(255, 255, 255, 0.04);
+  --color-bg-layout: #303030;
+  --country-list-bg: #1f1f1f;
+  --country-list-highlight-bg: #313131;
+  --disable-bg: rgba(255, 255, 255, 0.08);
+  --transparent-color: transparent;
+  --light-bg: rgba(255, 255, 255, 0.12);
+  --white-04: rgba(255, 255, 255, 0.04);
+  --summary-shadow-color: rgba(253, 253, 253, 0.22);
+  --bulk-action-shadow: 0px 6px 16px 0px rgb(239 239 239 / 8%),
+    0px 3px 6px -4px rgb(166 166 166 / 12%), 0px 9px 28px 8px rgb(0 0 0 / 5%);
+  --gray-7: #2a2a2a;
+  --bg-color: #242424;
+  --bg-color-1: #1b1b1b;
+  // login page colors
+  --login-bg: #171a18;
+  // alert icons colors
+  --success-icon-color: #49aa19;
+  --info-icon-color: var(--primary);
+  --warning-icon-color: #d89614;
+  --error-icon-color: #dc4446;
+  // Component-Specific Variables
+  --lite-silver: rgba(255, 255, 255, 0.06);
+  --complementary-white-1: var(--transparent-color);
+  --complementary-white-2: var(--transparent-color);
+  --white-02: rgba(255, 255, 255, 0.02);
+  --select-dropdown-bg: #272727;
+  // nested rows border color
+  --lite-black: rgba(255, 255, 255, 0.15);
+  --td-border-color: #303030;
+  --select-dropdown-bg: #272727;
+  --drawer-border-color: #4e4e4e;
+
+  // datepicker colors
+  --cell-range-bg: #287c38;
+
+  // sidebar colors
+  --sidebar-bg: #181818;
+}
+
+.ag-theme-alpine,
+.ag-theme-alpine-dark {
+  --ag-header-height: 38px;
+  --ag-font-size: 11px;
+  --ag-font-family: var(--font-family-inter);
+}
+.ag-theme-alpine {
+  // for add light theme variables
+  &#{$dark} {
+    --ag-background-color: var(--modal-bg);
+    --ag-border-color: var(--border-color-1);
+    --ag-header-background-color: var(--table-row-selected-header-bg);
+    --ag-odd-row-background-color: var(--modal-bg);
+    --ag-row-hover-color: var(--primary-hover);
+    --ag-selected-row-background-color: var(--primary-hover);
+    --ag-column-hover-color: var(--primary-hover);
+    --ag-data-color: var(--black-85);
+    --ag-checkbox-checked-color: var(--primary);
+    --ag-checkbox-background-color: var(--transparent-color);
+    --ag-input-focus-box-shadow: none;
+    --ag-input-focus-border-color: var(--primary);
+    --ag-selected-tab-underline-color: var(--primary);
+    --ag-alpine-active-color: var(--primary);
+  }
+}
