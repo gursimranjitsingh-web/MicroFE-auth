@@ -14,13 +14,9 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "mutation MaxUploadMedia($r2Url: [String]!, $apiKey: String, $language: String) {\n  maxUploadMedia(r2Url: $r2Url, apiKey: $apiKey, language: $language) {\n    data {\n      mediaId\n      r2Url\n    }\n  }\n}": typeof types.MaxUploadMediaDocument,
-    "mutation MaxCreateAdLaunch($input: maxCreateAdLaunchInput) {\n  maxCreateAdLaunchV2(input: $input) {\n    message\n    data {\n      id\n      name\n      query\n      adAccountID\n      countries\n      excludeCountries\n      language\n      provider\n      splitCountries\n      worldwide\n      segment\n      keywords\n      mediaIDs\n      titles\n      bodies\n      status\n      createdTS\n      facebookData\n      pixel\n    }\n  }\n}": typeof types.MaxCreateAdLaunchDocument,
     "query MaxConfig {\n  maxConfigV2\n}": typeof types.MaxConfigDocument,
 };
 const documents: Documents = {
-    "mutation MaxUploadMedia($r2Url: [String]!, $apiKey: String, $language: String) {\n  maxUploadMedia(r2Url: $r2Url, apiKey: $apiKey, language: $language) {\n    data {\n      mediaId\n      r2Url\n    }\n  }\n}": types.MaxUploadMediaDocument,
-    "mutation MaxCreateAdLaunch($input: maxCreateAdLaunchInput) {\n  maxCreateAdLaunchV2(input: $input) {\n    message\n    data {\n      id\n      name\n      query\n      adAccountID\n      countries\n      excludeCountries\n      language\n      provider\n      splitCountries\n      worldwide\n      segment\n      keywords\n      mediaIDs\n      titles\n      bodies\n      status\n      createdTS\n      facebookData\n      pixel\n    }\n  }\n}": types.MaxCreateAdLaunchDocument,
     "query MaxConfig {\n  maxConfigV2\n}": types.MaxConfigDocument,
 };
 
@@ -38,14 +34,6 @@ const documents: Documents = {
  */
 export function gql(source: string): unknown;
 
-/**
- * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function gql(source: "mutation MaxUploadMedia($r2Url: [String]!, $apiKey: String, $language: String) {\n  maxUploadMedia(r2Url: $r2Url, apiKey: $apiKey, language: $language) {\n    data {\n      mediaId\n      r2Url\n    }\n  }\n}"): (typeof documents)["mutation MaxUploadMedia($r2Url: [String]!, $apiKey: String, $language: String) {\n  maxUploadMedia(r2Url: $r2Url, apiKey: $apiKey, language: $language) {\n    data {\n      mediaId\n      r2Url\n    }\n  }\n}"];
-/**
- * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function gql(source: "mutation MaxCreateAdLaunch($input: maxCreateAdLaunchInput) {\n  maxCreateAdLaunchV2(input: $input) {\n    message\n    data {\n      id\n      name\n      query\n      adAccountID\n      countries\n      excludeCountries\n      language\n      provider\n      splitCountries\n      worldwide\n      segment\n      keywords\n      mediaIDs\n      titles\n      bodies\n      status\n      createdTS\n      facebookData\n      pixel\n    }\n  }\n}"): (typeof documents)["mutation MaxCreateAdLaunch($input: maxCreateAdLaunchInput) {\n  maxCreateAdLaunchV2(input: $input) {\n    message\n    data {\n      id\n      name\n      query\n      adAccountID\n      countries\n      excludeCountries\n      language\n      provider\n      splitCountries\n      worldwide\n      segment\n      keywords\n      mediaIDs\n      titles\n      bodies\n      status\n      createdTS\n      facebookData\n      pixel\n    }\n  }\n}"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

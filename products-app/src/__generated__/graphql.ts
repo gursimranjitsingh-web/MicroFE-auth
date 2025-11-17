@@ -21,6 +21,7 @@ export type Scalars = {
   DateTime: { input: any; output: any; }
   DotString: { input: any; output: any; }
   IntStringBoolean: { input: any; output: any; }
+  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](https://ecma-international.org/wp-content/uploads/ECMA-404_2nd_edition_december_2017.pdf). */
   JSON: { input: any; output: any; }
   MultiTypeValue: { input: any; output: any; }
   Object: { input: any; output: any; }
@@ -6562,20 +6563,6 @@ export type FrontData = {
   users?: Maybe<Scalars['Int']['output']>;
 };
 
-export type FrontDataV2 = {
-  __typename?: 'FrontDataV2';
-  business?: Maybe<CcBusiness>;
-  businessId?: Maybe<Scalars['ID']['output']>;
-  default?: Maybe<Scalars['Boolean']['output']>;
-  funnelSubTypes?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
-  funnelTypes?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
-  id?: Maybe<Scalars['ID']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-  teams?: Maybe<Scalars['Int']['output']>;
-  teamsCount?: Maybe<Scalars['Int']['output']>;
-  users?: Maybe<Scalars['Int']['output']>;
-};
-
 export enum FrontFilterField {
   FrontName = 'front_name',
   FunnelsubtypeName = 'funnelsubtype_name',
@@ -7874,14 +7861,12 @@ export type Mutation = {
   ccCreateColumnSettings: CcColumnSettingsResponse;
   ccCreateFront?: Maybe<CcCreateFrontResponse>;
   ccCreateFrontConfig?: Maybe<CcConfigResponse>;
-  ccCreateFrontV2?: Maybe<CcCreateFrontResponseV2>;
   ccCreateInternalTeam?: Maybe<CcCreateInternalTeamResponse>;
   ccCreateMobileColumnSettings: CcMobileColumnSettingsResponse;
   ccCreateRole?: Maybe<CcCreateRoleResponse>;
   ccCreateRoleFromPermission?: Maybe<CcCreateRoleResponse>;
   ccCreateTeam?: Maybe<CcCreateTeamResponse>;
   ccCreateTeamConfig?: Maybe<CcConfigResponse>;
-  ccCreateTeamV2?: Maybe<CcCreateTeamResponseV2>;
   ccCreateTour?: Maybe<CcTourResponse>;
   ccCreateUserConfig?: Maybe<CcConfigResponse>;
   ccDeactivateAgency?: Maybe<CcUpdateAgencyResponse>;
@@ -7921,7 +7906,6 @@ export type Mutation = {
   ccUpdateFront?: Maybe<CcUpdateFrontResponse>;
   ccUpdateFrontAndTeamLeadRelations?: Maybe<Scalars['Boolean']['output']>;
   ccUpdateFrontConfig?: Maybe<CcConfigResponse>;
-  ccUpdateFrontV2?: Maybe<CcUpdateFrontResponseV2>;
   ccUpdateInternalTeam?: Maybe<CcUpdateInternalTeamResponse>;
   ccUpdateInternalTeamCategory?: Maybe<CcAssetResponse>;
   ccUpdateInternalTeamDomain?: Maybe<CcAssetResponse>;
@@ -7935,7 +7919,6 @@ export type Mutation = {
   ccUpdateSinglePermission?: Maybe<Scalars['Boolean']['output']>;
   ccUpdateTeam?: Maybe<CcUpdateTeamResponse>;
   ccUpdateTeamConfig?: Maybe<CcConfigResponse>;
-  ccUpdateTeamV2?: Maybe<CcUpdateTeamResponse>;
   ccUpdateUser?: Maybe<CcUpdateUserResponse>;
   ccUpdateUserConfig?: Maybe<CcConfigResponse>;
   ccUpdateUserSetting?: Maybe<CcUpdateUserSettingResponse>;
@@ -8052,6 +8035,8 @@ export type Mutation = {
   fb360VideoSync?: Maybe<Scalars['Object']['output']>;
   fb360customReport?: Maybe<Scalars['Object']['output']>;
   feArchiveCampaigns?: Maybe<FeDeleteCampaignResponse>;
+  feBulkGenrateFlow?: Maybe<FeBulkGenrateFlowResponse>;
+  feBulkGenrateLander?: Maybe<FeBulkGenrateLanderResponse>;
   feBuyDomain: FeBuyDomainResponse;
   feCampaignClone: FeCampaignResponse;
   feCreateAdvertiser: FeAdvertiserResponse;
@@ -8109,6 +8094,7 @@ export type Mutation = {
   feDeleteVertical: ApiResponse;
   feDeleteWebsite: FeWebsiteResponse;
   feDuplicateRevenueStreamConfig?: Maybe<FeRevenueStreamConfigResponse>;
+  feGenrateTerms?: Maybe<FeGenrateTermsResponse>;
   feKeywordKeywordSet?: Maybe<FeKeywordSetsResponse>;
   feKeywordSetKeywordDomainUpdate?: Maybe<FeKeywordSetKeywordDomainUpdate>;
   feMergeFlow?: Maybe<FeMergeFlowResponse>;
@@ -8275,7 +8261,10 @@ export type Mutation = {
   lpUpdateLandingPageFromUpload: LpLandingPage;
   lpUpdateLandingPageHost: LpLandingPageHost;
   lpUpdateTemplate: LpTemplate;
+  lsGetReportUrl: LsReportUrl;
   lsRunCampaignAnalysis: LsOrchestrationResult;
+  lsSummarizeCampaign: LsCampaignSummary;
+  lsSummarizeCategory: LsCategorySummary;
   maxCreateAdLaunch?: Maybe<MaxCreateAdLaunchResponse>;
   maxCreateAdLaunchV2?: Maybe<MaxCreateAdLaunchResponse>;
   maxUploadMedia?: Maybe<MaximizerMediaUploadResponse>;
@@ -8462,6 +8451,7 @@ export type Mutation = {
   spyderDeleteGroup: SpyedGroupResponse;
   spyderDeletePage: Scalars['Boolean']['output'];
   spyderDeleteVendor: SpyderVendorResponse;
+  spyderKeywordToFE: SpyderKeywordToFeResponse;
   spyderLanderSlug?: Maybe<SpyderLanderSlugConnection>;
   spyderUpdateCompany: SpyderCompanyResponse;
   spyderUpdateCountry: SpyderCountryResponse;
@@ -8786,11 +8776,6 @@ export type MutationCcCreateFrontConfigArgs = {
 };
 
 
-export type MutationCcCreateFrontV2Args = {
-  createFrontPayload?: InputMaybe<CcCreateFrontPayloadV2>;
-};
-
-
 export type MutationCcCreateInternalTeamArgs = {
   teamPayload?: InputMaybe<CcInternalCreateTeamPayload>;
 };
@@ -8820,11 +8805,6 @@ export type MutationCcCreateTeamArgs = {
 export type MutationCcCreateTeamConfigArgs = {
   funnelData?: InputMaybe<Array<InputMaybe<CcFunnelDataInput>>>;
   team?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-export type MutationCcCreateTeamV2Args = {
-  createTeamPayload?: InputMaybe<CcCreateTeamPayloadV2>;
 };
 
 
@@ -9040,11 +9020,6 @@ export type MutationCcUpdateFrontConfigArgs = {
 };
 
 
-export type MutationCcUpdateFrontV2Args = {
-  updateFront?: InputMaybe<UpdateFront>;
-};
-
-
 export type MutationCcUpdateInternalTeamArgs = {
   updateteam?: InputMaybe<UpdateTeamInput>;
 };
@@ -9120,11 +9095,6 @@ export type MutationCcUpdateTeamArgs = {
 export type MutationCcUpdateTeamConfigArgs = {
   funnelData?: InputMaybe<Array<InputMaybe<CcFunnelDataInput>>>;
   id: Scalars['ID']['input'];
-};
-
-
-export type MutationCcUpdateTeamV2Args = {
-  updateteam?: InputMaybe<UpdateTeamInput>;
 };
 
 
@@ -9775,6 +9745,16 @@ export type MutationFeArchiveCampaignsArgs = {
 };
 
 
+export type MutationFeBulkGenrateFlowArgs = {
+  feflowBulkInput: Array<InputMaybe<FeBulkGenrateFlowInput>>;
+};
+
+
+export type MutationFeBulkGenrateLanderArgs = {
+  feBulkGenrateLanderInput: Array<InputMaybe<FeBulkGenrateLanderInput>>;
+};
+
+
 export type MutationFeBuyDomainArgs = {
   accountId: Scalars['String']['input'];
   category: Scalars['String']['input'];
@@ -10002,6 +9982,7 @@ export type MutationFeCreatePlaygroundCampaignArgs = {
   keywordSets?: InputMaybe<Array<InputMaybe<PlaygroundKeywordSetsInput>>>;
   language: Scalars['ID']['input'];
   member: FeMember;
+  pixel?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   prefix?: InputMaybe<Scalars['String']['input']>;
   subkeyword?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   trafficSource: Scalars['ID']['input'];
@@ -10291,6 +10272,11 @@ export type MutationFeDeleteWebsiteArgs = {
 
 export type MutationFeDuplicateRevenueStreamConfigArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type MutationFeGenrateTermsArgs = {
+  feGenrateTermsInput: Array<InputMaybe<FeGenrateTermsInput>>;
 };
 
 
@@ -11384,8 +11370,28 @@ export type MutationLpUpdateTemplateArgs = {
 };
 
 
+export type MutationLsGetReportUrlArgs = {
+  input: LsCampaignAnalysisInput;
+};
+
+
 export type MutationLsRunCampaignAnalysisArgs = {
   input: LsCampaignAnalysisInput;
+};
+
+
+export type MutationLsSummarizeCampaignArgs = {
+  campaignId: Scalars['String']['input'];
+  tone?: InputMaybe<Scalars['String']['input']>;
+  trafficSourceId?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type MutationLsSummarizeCategoryArgs = {
+  category: Scalars['String']['input'];
+  chunkSize?: Scalars['Int']['input'];
+  tone?: InputMaybe<Scalars['String']['input']>;
+  trafficSourceId?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -11440,6 +11446,7 @@ export type MutationNative360NetworkInvitationArgs = {
 export type MutationNative360ReportSyncArgs = {
   adaccountIds?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   end: Scalars['String']['input'];
+  hours?: InputMaybe<Scalars['Int']['input']>;
   start: Scalars['String']['input'];
 };
 
@@ -12418,6 +12425,12 @@ export type MutationSpyderDeletePageArgs = {
 
 export type MutationSpyderDeleteVendorArgs = {
   id: Scalars['ID']['input'];
+};
+
+
+export type MutationSpyderKeywordToFeArgs = {
+  adIds?: InputMaybe<Array<Scalars['ID']['input']>>;
+  landerIds?: InputMaybe<Array<Scalars['ID']['input']>>;
 };
 
 
@@ -13883,15 +13896,21 @@ export enum PgFunctionDuplicationColumnEnum {
   FunctionType = 'FUNCTION_TYPE',
   Keyword = 'KEYWORD',
   KeywordCategory = 'KEYWORD_CATEGORY',
+  KeywordConversionActions = 'KEYWORD_CONVERSION_ACTIONS',
   KeywordCountry = 'KEYWORD_COUNTRY',
   KeywordFeed = 'KEYWORD_FEED',
   KeywordFlow = 'KEYWORD_FLOW',
   KeywordKeyword = 'KEYWORD_KEYWORD',
   KeywordLander = 'KEYWORD_LANDER',
+  KeywordLanderTitle = 'KEYWORD_LANDER_TITLE',
   KeywordLanguage = 'KEYWORD_LANGUAGE',
   KeywordSpecialCategory = 'KEYWORD_SPECIAL_CATEGORY',
   KeywordSubKeywords = 'KEYWORD_SUB_KEYWORDS',
+  KeywordTerms = 'KEYWORD_TERMS',
   KeywordVendor = 'KEYWORD_VENDOR',
+  KeywordVendorAccount = 'KEYWORD_VENDOR_ACCOUNT',
+  KeywordVendorCategory = 'KEYWORD_VENDOR_CATEGORY',
+  KeywordVendorDomain = 'KEYWORD_VENDOR_DOMAIN',
   KeywordVertical = 'KEYWORD_VERTICAL',
   LanderId = 'LANDER_ID',
   Launch = 'LAUNCH',
@@ -14010,29 +14029,41 @@ export type PgImageUploadResponseWrapper = {
 export type PgKeyword = {
   __typename?: 'PGKeyword';
   category?: Maybe<PgLabelValue>;
+  conversionActions?: Maybe<Array<Maybe<PgLabelValue>>>;
   country?: Maybe<PgLabelValue>;
   feed?: Maybe<PgLabelValue>;
   flow?: Maybe<PgLabelValue>;
   keyword?: Maybe<Scalars['String']['output']>;
   lander?: Maybe<PgLabelValue>;
+  landerTitle?: Maybe<Scalars['String']['output']>;
   language?: Maybe<PgLabelValue>;
   specialCategory?: Maybe<PgLabelValue>;
   subKeywords?: Maybe<Array<Maybe<PgLabelValue>>>;
+  terms?: Maybe<Scalars['String']['output']>;
   vendor?: Maybe<PgLabelValue>;
+  vendorAccount?: Maybe<PgLabelValue>;
+  vendorCategory?: Maybe<PgLabelValue>;
+  vendorDomain?: Maybe<PgLabelValue>;
   vertical?: Maybe<PgLabelValue>;
 };
 
 export type PgKeywordInput = {
   category?: InputMaybe<PgLabelValueInput>;
+  conversionActions?: InputMaybe<Array<InputMaybe<PgLabelValueInput>>>;
   country?: InputMaybe<PgLabelValueInput>;
   feed?: InputMaybe<PgLabelValueInput>;
   flow?: InputMaybe<PgLabelValueInput>;
   keyword?: InputMaybe<Scalars['String']['input']>;
   lander?: InputMaybe<PgLabelValueInput>;
+  landerTitle?: InputMaybe<Scalars['String']['input']>;
   language?: InputMaybe<PgLabelValueInput>;
   specialCategory?: InputMaybe<PgLabelValueInput>;
   subKeywords?: InputMaybe<Array<InputMaybe<PgLabelValueInput>>>;
+  terms?: InputMaybe<Scalars['String']['input']>;
   vendor?: InputMaybe<PgLabelValueInput>;
+  vendorAccount?: InputMaybe<PgLabelValueInput>;
+  vendorCategory?: InputMaybe<PgLabelValueInput>;
+  vendorDomain?: InputMaybe<PgLabelValueInput>;
   vertical?: InputMaybe<PgLabelValueInput>;
 };
 
@@ -14831,9 +14862,7 @@ export type Query = {
   ccColumnSettings?: Maybe<CcColumnSettingsResponse>;
   ccDomains?: Maybe<CcAssetResponse>;
   ccFront?: Maybe<CcFrontDetailResponse>;
-  ccFrontV2?: Maybe<CcFrontDetailResponseV2>;
   ccFronts?: Maybe<CcFrontResponse>;
-  ccFrontsV2?: Maybe<CcFrontResponseV2>;
   ccFunnelAllSubType?: Maybe<CcFunnelSubTypeResponse>;
   ccFunnelSubType?: Maybe<CcFunnelSubTypeResponse>;
   ccFunnelType?: Maybe<CcTypeResponse>;
@@ -14861,9 +14890,7 @@ export type Query = {
   ccSubTypesForFunnelTypes?: Maybe<CcFunnelSubTypeResponse>;
   ccTeam?: Maybe<CcTeamResponse>;
   ccTeamTransparentPermissions?: Maybe<Array<Maybe<CcTeamTransparentPermissions>>>;
-  ccTeamV2?: Maybe<CcTeamResponseV2>;
   ccTeams?: Maybe<CcTeamsResponse>;
-  ccTeamsV2?: Maybe<CcTeamsResponseV2>;
   ccTimeZoneList?: Maybe<CcTimeZoneReponse>;
   ccTimeZones?: Maybe<CcTimeZonesReponse>;
   ccTransparentPermissions?: Maybe<Array<Maybe<CcTransparentPermissions>>>;
@@ -14872,6 +14899,7 @@ export type Query = {
   ccUsers?: Maybe<CcUsersResponse>;
   ccUsersForFront?: Maybe<CcUsersForTeamAndFrontResponse>;
   ccUsersForTeam?: Maybe<CcUsersForTeamAndFrontResponse>;
+  checkUrlCache: Scalars['JSON']['output'];
   clCreativeAssets?: Maybe<ClCreativeAssets>;
   clCreativeGroups: PagedGroupResponse;
   clCreativeImages: ClPagedImageResponse;
@@ -15008,6 +15036,7 @@ export type Query = {
   feLanderByFunnel?: Maybe<FeLanderResponse>;
   feLanderCampaign?: Maybe<FePaginatedCampaign>;
   feLanderConfig?: Maybe<FeLanderConfigDataResponse>;
+  feLanderConfigWaitStatus?: Maybe<Scalars['Object']['output']>;
   feLanderConfigs?: Maybe<FeLanderConfigResponse>;
   feLanguage: FeLanguage;
   feLanguages: Array<FeLanguage>;
@@ -15350,7 +15379,6 @@ export type Query = {
   spyderDomains: DomainConnection;
   spyderGroup: SpyedGroup;
   spyderGroups: SpyedGroupConnection;
-  spyderKeywordToFE: SpyderKeywordToFeResponse;
   spyderPages: PageConnection;
   spyderPagesBySpyderGroup: PageConnection;
   spyderRefetchLanderKeywords: SpyderRefetchLanderKeywordsResponse;
@@ -15599,7 +15627,9 @@ export type QueryCcActiveUsersArgs = {
   filter?: InputMaybe<UserListingFilterGroupInput>;
   frontId?: InputMaybe<Scalars['ID']['input']>;
   frontIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  isExcludeFrontLeadUser?: InputMaybe<Scalars['Boolean']['input']>;
   isExcludeLoggedInUser?: InputMaybe<Scalars['Boolean']['input']>;
+  isExcludeTeamLeadUser?: InputMaybe<Scalars['Boolean']['input']>;
   pagination?: InputMaybe<PaginationInput>;
   teamId?: InputMaybe<Scalars['ID']['input']>;
   teamIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
@@ -15662,24 +15692,7 @@ export type QueryCcFrontArgs = {
 };
 
 
-export type QueryCcFrontV2Args = {
-  frontId?: InputMaybe<Scalars['String']['input']>;
-};
-
-
 export type QueryCcFrontsArgs = {
-  agencyId?: InputMaybe<Scalars['String']['input']>;
-  businessId?: InputMaybe<Scalars['String']['input']>;
-  businessIds?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  excludedFronts?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  filter?: InputMaybe<FrontFilterGroupInput>;
-  isDefault?: InputMaybe<Scalars['Boolean']['input']>;
-  isExcludeCurrentFront?: InputMaybe<Scalars['Boolean']['input']>;
-  pagination?: InputMaybe<PaginationInput>;
-};
-
-
-export type QueryCcFrontsV2Args = {
   agencyId?: InputMaybe<Scalars['String']['input']>;
   businessId?: InputMaybe<Scalars['String']['input']>;
   businessIds?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
@@ -15862,24 +15875,7 @@ export type QueryCcTeamTransparentPermissionsArgs = {
 };
 
 
-export type QueryCcTeamV2Args = {
-  teamId?: InputMaybe<Scalars['String']['input']>;
-};
-
-
 export type QueryCcTeamsArgs = {
-  agencyId?: InputMaybe<Scalars['ID']['input']>;
-  excludedTeams?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  filter?: InputMaybe<TeamFilterGroupInput>;
-  frontId?: InputMaybe<Scalars['ID']['input']>;
-  frontIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  isDefault?: InputMaybe<Scalars['Boolean']['input']>;
-  isExcludeCurrentTeam?: InputMaybe<Scalars['Boolean']['input']>;
-  pagination?: InputMaybe<PaginationInput>;
-};
-
-
-export type QueryCcTeamsV2Args = {
   agencyId?: InputMaybe<Scalars['ID']['input']>;
   excludedTeams?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   filter?: InputMaybe<TeamFilterGroupInput>;
@@ -15919,7 +15915,9 @@ export type QueryCcUsersArgs = {
   excludedUsers?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   filter?: InputMaybe<UserListingFilterGroupInput>;
   frontId?: InputMaybe<Scalars['ID']['input']>;
+  isExcludeFrontLeadUser?: InputMaybe<Scalars['Boolean']['input']>;
   isExcludeLoggedInUser?: InputMaybe<Scalars['Boolean']['input']>;
+  isExcludeTeamLeadUser?: InputMaybe<Scalars['Boolean']['input']>;
   pagination?: InputMaybe<PaginationInput>;
   teamId?: InputMaybe<Scalars['ID']['input']>;
   userId?: InputMaybe<Scalars['ID']['input']>;
@@ -15938,6 +15936,11 @@ export type QueryCcUsersForTeamArgs = {
   frontId?: InputMaybe<Scalars['ID']['input']>;
   pagination?: InputMaybe<PaginationInput>;
   userId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+};
+
+
+export type QueryCheckUrlCacheArgs = {
+  input: LsCampaignAnalysisInput;
 };
 
 
@@ -16738,6 +16741,12 @@ export type QueryFeLanderCampaignArgs = {
 
 
 export type QueryFeLanderConfigArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryFeLanderConfigWaitStatusArgs = {
+  domainUrl: Scalars['String']['input'];
   id: Scalars['ID']['input'];
 };
 
@@ -18436,12 +18445,6 @@ export type QuerySpyderGroupsArgs = {
 };
 
 
-export type QuerySpyderKeywordToFeArgs = {
-  adIds?: InputMaybe<Array<Scalars['ID']['input']>>;
-  landerIds?: InputMaybe<Array<Scalars['ID']['input']>>;
-};
-
-
 export type QuerySpyderPagesArgs = {
   filter?: InputMaybe<SpyderPageFilterInput>;
   filters?: InputMaybe<PageFilterInput>;
@@ -19516,6 +19519,7 @@ export enum ServiceAlias {
   Nb360 = 'nb360',
   Pg = 'pg',
   S2s = 's2s',
+  Sn360 = 'sn360',
   T360 = 't360'
 }
 
@@ -19633,6 +19637,7 @@ export type SpyderConfigInput = {
   lsd: Scalars['String']['input'];
   name: Scalars['String']['input'];
   raw_data: Scalars['String']['input'];
+  status: Scalars['String']['input'];
 };
 
 export type SpyderPageInput = {
@@ -20525,14 +20530,6 @@ export type TlTargetingFilterInput = {
   value?: InputMaybe<Array<InputMaybe<Scalars['StringOrNumber']['input']>>>;
 };
 
-export type Tlv2 = {
-  __typename?: 'TLV2';
-  id: Scalars['ID']['output'];
-  name?: Maybe<Scalars['String']['output']>;
-  teamLeads?: Maybe<Array<Maybe<CcTeamLead>>>;
-  users?: Maybe<Array<Maybe<User>>>;
-};
-
 export enum TlViewAttributionWindow {
   Off = 'OFF',
   OneDay = 'ONE_DAY',
@@ -20571,26 +20568,6 @@ export type TeamData = {
   permissions?: Maybe<Array<Maybe<Scalars['Int']['output']>>>;
   teamAlias?: Maybe<Scalars['String']['output']>;
   teamLead?: Maybe<TeamLead>;
-  teamLeads?: Maybe<Array<Maybe<TeamLead>>>;
-  user?: Maybe<Array<Maybe<UsersData>>>;
-  userCount?: Maybe<Scalars['Int']['output']>;
-};
-
-export type TeamDataV2 = {
-  __typename?: 'TeamDataV2';
-  categoryCount?: Maybe<Scalars['Int']['output']>;
-  createdAt?: Maybe<Scalars['String']['output']>;
-  description?: Maybe<Scalars['String']['output']>;
-  domainCount?: Maybe<Scalars['Int']['output']>;
-  frontId?: Maybe<Scalars['ID']['output']>;
-  funnelCount?: Maybe<Scalars['Int']['output']>;
-  funnelTypeCount?: Maybe<Scalars['Int']['output']>;
-  id?: Maybe<Scalars['ID']['output']>;
-  isCollaborative?: Maybe<Scalars['Boolean']['output']>;
-  isDefault?: Maybe<Scalars['Boolean']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-  permissions?: Maybe<Array<Maybe<Scalars['Int']['output']>>>;
-  teamAlias?: Maybe<Scalars['String']['output']>;
   teamLeads?: Maybe<Array<Maybe<TeamLead>>>;
   user?: Maybe<Array<Maybe<UsersData>>>;
   userCount?: Maybe<Scalars['Int']['output']>;
@@ -20642,21 +20619,6 @@ export type TeamsData = {
   name?: Maybe<Scalars['String']['output']>;
   teamAlias?: Maybe<Scalars['String']['output']>;
   teamLeadName?: Maybe<Scalars['String']['output']>;
-  teamLeadNames?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
-  users?: Maybe<Scalars['Int']['output']>;
-};
-
-export type TeamsDataV2 = {
-  __typename?: 'TeamsDataV2';
-  createdAt?: Maybe<Scalars['String']['output']>;
-  default?: Maybe<Scalars['Boolean']['output']>;
-  departmentName?: Maybe<Scalars['String']['output']>;
-  frontName?: Maybe<Scalars['String']['output']>;
-  funnelSubTypes?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
-  funnelTypes?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
-  id?: Maybe<Scalars['ID']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-  teamAlias?: Maybe<Scalars['String']['output']>;
   teamLeadNames?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   users?: Maybe<Scalars['Int']['output']>;
 };
@@ -22032,38 +21994,10 @@ export type CcCreateFrontData = {
   users?: Maybe<Scalars['Int']['output']>;
 };
 
-export type CcCreateFrontDataV2 = {
-  __typename?: 'ccCreateFrontDataV2';
-  business?: Maybe<CcBusiness>;
-  businessId?: Maybe<Scalars['ID']['output']>;
-  createdAt: Scalars['String']['output'];
-  description?: Maybe<Scalars['String']['output']>;
-  displayImage?: Maybe<Scalars['String']['output']>;
-  frontLeads?: Maybe<Array<CcUser>>;
-  funnelSubTypes?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
-  funnelTypes?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
-  id: Scalars['ID']['output'];
-  isDeleted: Scalars['Boolean']['output'];
-  name?: Maybe<Scalars['String']['output']>;
-  teams?: Maybe<Scalars['Int']['output']>;
-  teamsCount?: Maybe<Scalars['Int']['output']>;
-  updatedAt: Scalars['String']['output'];
-  users?: Maybe<Scalars['Int']['output']>;
-};
-
 export type CcCreateFrontPayload = {
   businessId?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
-  frontLeadId: Scalars['String']['input'];
-  frontUsers?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  funnelData: Array<CcFrontFunnelData>;
-  name: Scalars['String']['input'];
-};
-
-export type CcCreateFrontPayloadV2 = {
-  businessId?: InputMaybe<Scalars['String']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
-  frontLeadIds: Array<Scalars['ID']['input']>;
+  frontLeadIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   frontUsers?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   funnelData: Array<CcFrontFunnelData>;
   name: Scalars['String']['input'];
@@ -22072,12 +22006,6 @@ export type CcCreateFrontPayloadV2 = {
 export type CcCreateFrontResponse = {
   __typename?: 'ccCreateFrontResponse';
   data?: Maybe<CcCreateFrontData>;
-  message?: Maybe<Scalars['String']['output']>;
-};
-
-export type CcCreateFrontResponseV2 = {
-  __typename?: 'ccCreateFrontResponseV2';
-  data?: Maybe<CcCreateFrontDataV2>;
   message?: Maybe<Scalars['String']['output']>;
 };
 
@@ -22114,26 +22042,7 @@ export type CcCreateTeamData = {
   permissions?: Maybe<Array<Maybe<Scalars['Int']['output']>>>;
   teamAlias?: Maybe<Scalars['String']['output']>;
   teamLead?: Maybe<CcUser>;
-  teamsCount?: Maybe<Scalars['Int']['output']>;
-  updatedAt: Scalars['String']['output'];
-  users?: Maybe<Scalars['Int']['output']>;
-};
-
-export type CcCreateTeamDataV2 = {
-  __typename?: 'ccCreateTeamDataV2';
-  createdAt: Scalars['String']['output'];
-  description?: Maybe<Scalars['String']['output']>;
-  displayImage?: Maybe<Scalars['String']['output']>;
-  frontName?: Maybe<Scalars['String']['output']>;
-  funnelSubTypes?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
-  funnelTypes?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
-  id: Scalars['ID']['output'];
-  isCollaborative?: Maybe<Scalars['Boolean']['output']>;
-  isDeleted: Scalars['Boolean']['output'];
-  name?: Maybe<Scalars['String']['output']>;
-  permissions?: Maybe<Array<Maybe<Scalars['Int']['output']>>>;
-  teamAlias?: Maybe<Scalars['String']['output']>;
-  teamLead?: Maybe<Array<Maybe<CcUser>>>;
+  teamLeads?: Maybe<Array<Maybe<CcUser>>>;
   teamsCount?: Maybe<Scalars['Int']['output']>;
   updatedAt: Scalars['String']['output'];
   users?: Maybe<Scalars['Int']['output']>;
@@ -22147,32 +22056,13 @@ export type CcCreateTeamPayload = {
   name: Scalars['String']['input'];
   permissions?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
   teamAlias?: InputMaybe<Scalars['String']['input']>;
-  teamLeadId: Scalars['String']['input'];
   teamLeadIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  teamUsers?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-};
-
-export type CcCreateTeamPayloadV2 = {
-  description?: InputMaybe<Scalars['String']['input']>;
-  frontId: Scalars['String']['input'];
-  funnelData: Array<CcTeamFunnelData>;
-  isCollaborative?: InputMaybe<Scalars['Boolean']['input']>;
-  name: Scalars['String']['input'];
-  permissions?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
-  teamAlias?: InputMaybe<Scalars['String']['input']>;
-  teamLeadIds: Array<Scalars['ID']['input']>;
   teamUsers?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
 };
 
 export type CcCreateTeamResponse = {
   __typename?: 'ccCreateTeamResponse';
   data?: Maybe<CcCreateTeamData>;
-  message?: Maybe<Scalars['String']['output']>;
-};
-
-export type CcCreateTeamResponseV2 = {
-  __typename?: 'ccCreateTeamResponseV2';
-  data?: Maybe<CcCreateTeamDataV2>;
   message?: Maybe<Scalars['String']['output']>;
 };
 
@@ -22226,12 +22116,6 @@ export type CcFrontDetailResponse = {
   totalCount?: Maybe<Scalars['Int']['output']>;
 };
 
-export type CcFrontDetailResponseV2 = {
-  __typename?: 'ccFrontDetailResponseV2';
-  data?: Maybe<CcFrontDetailsV2>;
-  totalCount?: Maybe<Scalars['Int']['output']>;
-};
-
 export type CcFrontDetails = {
   __typename?: 'ccFrontDetails';
   agencyId?: Maybe<Scalars['ID']['output']>;
@@ -22250,27 +22134,6 @@ export type CcFrontDetails = {
   name?: Maybe<Scalars['String']['output']>;
   teamCount?: Maybe<Scalars['Int']['output']>;
   teams?: Maybe<Array<Maybe<Tl>>>;
-  user?: Maybe<Array<Maybe<User>>>;
-  userCount?: Maybe<Scalars['Int']['output']>;
-};
-
-export type CcFrontDetailsV2 = {
-  __typename?: 'ccFrontDetailsV2';
-  agencyId?: Maybe<Scalars['ID']['output']>;
-  business?: Maybe<CcBusiness>;
-  businessId?: Maybe<Scalars['ID']['output']>;
-  categoryCount?: Maybe<Scalars['Int']['output']>;
-  description?: Maybe<Scalars['String']['output']>;
-  displayImage?: Maybe<Scalars['String']['output']>;
-  domainCount?: Maybe<Scalars['Int']['output']>;
-  frontLeads?: Maybe<Array<Maybe<CcFrontLead>>>;
-  funnelCount?: Maybe<Scalars['Int']['output']>;
-  funnelTypeCount?: Maybe<Scalars['Int']['output']>;
-  id?: Maybe<Scalars['ID']['output']>;
-  isDefault?: Maybe<Scalars['Boolean']['output']>;
-  name?: Maybe<Scalars['String']['output']>;
-  teamCount?: Maybe<Scalars['Int']['output']>;
-  teams?: Maybe<Array<Maybe<Tlv2>>>;
   user?: Maybe<Array<Maybe<User>>>;
   userCount?: Maybe<Scalars['Int']['output']>;
 };
@@ -22305,12 +22168,6 @@ export type CcFrontLead = {
 export type CcFrontResponse = {
   __typename?: 'ccFrontResponse';
   data?: Maybe<Array<Maybe<FrontData>>>;
-  totalCount?: Maybe<Scalars['Int']['output']>;
-};
-
-export type CcFrontResponseV2 = {
-  __typename?: 'ccFrontResponseV2';
-  data?: Maybe<Array<Maybe<FrontDataV2>>>;
   totalCount?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -22708,12 +22565,6 @@ export type CcTeamResponse = {
   totalCount?: Maybe<Scalars['Int']['output']>;
 };
 
-export type CcTeamResponseV2 = {
-  __typename?: 'ccTeamResponseV2';
-  data?: Maybe<TeamDataV2>;
-  totalCount?: Maybe<Scalars['Int']['output']>;
-};
-
 export type CcTeamTransparentPermissions = {
   __typename?: 'ccTeamTransparentPermissions';
   permissions?: Maybe<Array<Maybe<CcIdNameDisplayName>>>;
@@ -22723,12 +22574,6 @@ export type CcTeamTransparentPermissions = {
 export type CcTeamsResponse = {
   __typename?: 'ccTeamsResponse';
   data?: Maybe<Array<Maybe<TeamsData>>>;
-  totalCount?: Maybe<Scalars['Int']['output']>;
-};
-
-export type CcTeamsResponseV2 = {
-  __typename?: 'ccTeamsResponseV2';
-  data?: Maybe<Array<Maybe<TeamsDataV2>>>;
   totalCount?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -22840,12 +22685,6 @@ export type CcUpdateFrontResponse = {
   message?: Maybe<Scalars['String']['output']>;
 };
 
-export type CcUpdateFrontResponseV2 = {
-  __typename?: 'ccUpdateFrontResponseV2';
-  data?: Maybe<CcCreateFrontDataV2>;
-  message?: Maybe<Scalars['String']['output']>;
-};
-
 export type CcUpdateInternalTeamResponse = {
   __typename?: 'ccUpdateInternalTeamResponse';
   data?: Maybe<InternalTeamData>;
@@ -22875,12 +22714,6 @@ export type CcUpdateRoleInput = {
 export type CcUpdateTeamResponse = {
   __typename?: 'ccUpdateTeamResponse';
   data?: Maybe<CcCreateTeamData>;
-  message?: Maybe<Scalars['String']['output']>;
-};
-
-export type CcUpdateTeamResponseV2 = {
-  __typename?: 'ccUpdateTeamResponseV2';
-  data?: Maybe<CcCreateTeamDataV2>;
   message?: Maybe<Scalars['String']['output']>;
 };
 
@@ -23969,6 +23802,70 @@ export type FeBlockedKeywordResponse = {
   message?: Maybe<Scalars['String']['output']>;
 };
 
+export type FeBulkFlowWithBatch = {
+  __typename?: 'feBulkFlowWithBatch';
+  batchId: Scalars['String']['output'];
+  campaign?: Maybe<FeCampaign>;
+  error?: Maybe<Scalars['String']['output']>;
+};
+
+export type FeBulkGenrateFlowInput = {
+  batchId: Scalars['String']['input'];
+  category: Scalars['ID']['input'];
+  country: Scalars['ID']['input'];
+  domain: Scalars['String']['input'];
+  flowId?: InputMaybe<Scalars['ID']['input']>;
+  funnelSubType: Scalars['ID']['input'];
+  keyword: Scalars['String']['input'];
+  keywordSets?: InputMaybe<Array<InputMaybe<PlaygroundKeywordSetsInput>>>;
+  language: Scalars['ID']['input'];
+  member: FeMember;
+  pixel?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  prefix?: InputMaybe<Scalars['String']['input']>;
+  subkeyword?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  trafficSource: Scalars['ID']['input'];
+};
+
+export type FeBulkGenrateFlowResponse = {
+  __typename?: 'feBulkGenrateFlowResponse';
+  data?: Maybe<Array<Maybe<FeBulkFlowWithBatch>>>;
+  message?: Maybe<Scalars['String']['output']>;
+};
+
+export type FeBulkGenrateLanderInput = {
+  adsCategoryId?: InputMaybe<Scalars['ID']['input']>;
+  adsContent?: InputMaybe<Array<InputMaybe<FeAdsBlockInput>>>;
+  batchId: Scalars['String']['input'];
+  category: Scalars['ID']['input'];
+  d?: InputMaybe<Scalars['ID']['input']>;
+  domain: Scalars['ID']['input'];
+  inuvoContent?: InputMaybe<Scalars['String']['input']>;
+  isManual?: InputMaybe<Scalars['Boolean']['input']>;
+  keywords?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  landerTitle: Scalars['String']['input'];
+  language: Scalars['ID']['input'];
+  obMediaCategoryId?: InputMaybe<Scalars['ID']['input']>;
+  obMediaContent?: InputMaybe<Scalars['String']['input']>;
+  predictoCategoryId?: InputMaybe<Scalars['ID']['input']>;
+  subTitle?: InputMaybe<Scalars['String']['input']>;
+  thumbnail?: InputMaybe<Scalars['String']['input']>;
+  vendor: Scalars['ID']['input'];
+  vendorAccount: Scalars['ID']['input'];
+};
+
+export type FeBulkGenrateLanderResponse = {
+  __typename?: 'feBulkGenrateLanderResponse';
+  data?: Maybe<Array<Maybe<FeBulkLanderWithBatch>>>;
+  message?: Maybe<Scalars['String']['output']>;
+};
+
+export type FeBulkLanderWithBatch = {
+  __typename?: 'feBulkLanderWithBatch';
+  batchId: Scalars['String']['output'];
+  error?: Maybe<Scalars['String']['output']>;
+  lander?: Maybe<FelanderData>;
+};
+
 export type FeBuyDomain = {
   __typename?: 'feBuyDomain';
   accountId: Scalars['String']['output'];
@@ -24369,6 +24266,23 @@ export type FeFunnelTypeVendors = {
   name?: Maybe<Scalars['String']['output']>;
   pseudoName?: Maybe<Scalars['String']['output']>;
   timezone?: Maybe<Scalars['String']['output']>;
+};
+
+export type FeGenrateTermsData = {
+  __typename?: 'feGenrateTermsData';
+  batchId: Scalars['String']['output'];
+  keywords?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+};
+
+export type FeGenrateTermsInput = {
+  batchId: Scalars['String']['input'];
+  keyword: Scalars['String']['input'];
+};
+
+export type FeGenrateTermsResponse = {
+  __typename?: 'feGenrateTermsResponse';
+  data?: Maybe<Array<Maybe<FeGenrateTermsData>>>;
+  message?: Maybe<Scalars['String']['output']>;
 };
 
 export type FeKeyworSetsKeyword = {
@@ -27195,15 +27109,64 @@ export type LsCampaignAnalysisInput = {
   category: Scalars['String']['input'];
 };
 
+export type LsCampaignSummary = {
+  __typename?: 'lsCampaignSummary';
+  benchmarks?: Maybe<Scalars['String']['output']>;
+  campaignComparisonData?: Maybe<Scalars['JSON']['output']>;
+  campaignId: Scalars['String']['output'];
+  categorySummary?: Maybe<Scalars['JSON']['output']>;
+  costDynamics?: Maybe<Array<Scalars['String']['output']>>;
+  countryAnalysis?: Maybe<Array<Scalars['String']['output']>>;
+  dataQualityAnomalies?: Maybe<Array<Scalars['String']['output']>>;
+  descriptions?: Maybe<Scalars['JSON']['output']>;
+  durationDays?: Maybe<Scalars['String']['output']>;
+  heads?: Maybe<Scalars['JSON']['output']>;
+  hourOverHourChanges?: Maybe<Array<Scalars['String']['output']>>;
+  imageAnalysis?: Maybe<Scalars['JSON']['output']>;
+  keywordAnalysis?: Maybe<Scalars['JSON']['output']>;
+  margin?: Maybe<Scalars['String']['output']>;
+  revenue?: Maybe<Scalars['String']['output']>;
+  seasonalityData?: Maybe<Scalars['JSON']['output']>;
+  shortSummary?: Maybe<Scalars['String']['output']>;
+  spend?: Maybe<Scalars['String']['output']>;
+};
+
+export type LsCategorySummary = {
+  __typename?: 'lsCategorySummary';
+  benchmarksComparison?: Maybe<Scalars['String']['output']>;
+  campaigns: Array<LsCampaignSummary>;
+  dataQualityAnomalies?: Maybe<Array<Scalars['String']['output']>>;
+  historicalComparison?: Maybe<Scalars['String']['output']>;
+  monthOverMonthChanges?: Maybe<Array<Scalars['String']['output']>>;
+  name: Scalars['String']['output'];
+  shortSummary?: Maybe<Scalars['String']['output']>;
+  spotlightInsights?: Maybe<Array<Scalars['String']['output']>>;
+  weekOverWeekChanges?: Maybe<Array<Scalars['String']['output']>>;
+};
+
 export type LsOrchestrationResult = {
   __typename?: 'lsOrchestrationResult';
+  analysisTimestamp?: Maybe<Scalars['String']['output']>;
+  campaignId?: Maybe<Scalars['String']['output']>;
+  campaigns: Scalars['JSON']['output'];
   campaignsAnalyzed: Scalars['Int']['output'];
-  category: Scalars['String']['output'];
+  category?: Maybe<Scalars['String']['output']>;
+  categoryDetected?: Maybe<Scalars['String']['output']>;
+  chunksProcessed?: Maybe<Scalars['Int']['output']>;
   data: Scalars['String']['output'];
+  error?: Maybe<Scalars['String']['output']>;
   fromCache: Scalars['Boolean']['output'];
   message: Scalars['String']['output'];
   success: Scalars['Boolean']['output'];
   timestamp: Scalars['String']['output'];
+};
+
+export type LsReportUrl = {
+  __typename?: 'lsReportUrl';
+  campaignId?: Maybe<Scalars['String']['output']>;
+  category?: Maybe<Scalars['String']['output']>;
+  success: Scalars['Boolean']['output'];
+  url: Scalars['String']['output'];
 };
 
 export type MaxAccountPaginationInput = {
@@ -32135,6 +32098,7 @@ export type UrReport = {
   funnelTypeId?: Maybe<Scalars['ID']['output']>;
   funnelTypeName?: Maybe<Scalars['String']['output']>;
   head?: Maybe<Scalars['String']['output']>;
+  hookRate?: Maybe<Scalars['Float']['output']>;
   hourOfDay?: Maybe<Scalars['Int']['output']>;
   image?: Maybe<Scalars['String']['output']>;
   inlineLinkClicks?: Maybe<Scalars['Int']['output']>;
@@ -32169,6 +32133,7 @@ export type UrReport = {
   proas?: Maybe<Scalars['Float']['output']>;
   profit?: Maybe<Scalars['Float']['output']>;
   purchase?: Maybe<Scalars['Int']['output']>;
+  purchaseRoas?: Maybe<Scalars['Float']['output']>;
   reportDate?: Maybe<Scalars['Date']['output']>;
   reportHour?: Maybe<Scalars['Date']['output']>;
   reportMonth?: Maybe<Scalars['Date']['output']>;
@@ -32300,6 +32265,7 @@ export type UrSummary = {
   epc?: Maybe<Scalars['Float']['output']>;
   epv?: Maybe<Scalars['Float']['output']>;
   estimateRevenue?: Maybe<Scalars['Float']['output']>;
+  hookRate?: Maybe<Scalars['Float']['output']>;
   inlineLinkClicks?: Maybe<Scalars['Int']['output']>;
   lp_ctr?: Maybe<Scalars['Float']['output']>;
   lpv?: Maybe<Scalars['Int']['output']>;
@@ -32320,6 +32286,7 @@ export type UrSummary = {
   proas?: Maybe<Scalars['Float']['output']>;
   profit?: Maybe<Scalars['Float']['output']>;
   purchase?: Maybe<Scalars['Int']['output']>;
+  purchaseRoas?: Maybe<Scalars['Float']['output']>;
   results?: Maybe<Scalars['Int']['output']>;
   rev_ctr?: Maybe<Scalars['Float']['output']>;
   revenue?: Maybe<Scalars['Float']['output']>;
@@ -32367,6 +32334,7 @@ export enum UrSyncReportTypeEnum {
 export type UrUserActivity = {
   __typename?: 'urUserActivity';
   agencyId?: Maybe<Scalars['Int']['output']>;
+  events?: Maybe<Scalars['Int']['output']>;
   filter?: Maybe<Scalars['String']['output']>;
   frontId?: Maybe<Scalars['Int']['output']>;
   group?: Maybe<Scalars['String']['output']>;
@@ -32377,10 +32345,14 @@ export type UrUserActivity = {
   inputTrafficSourceId?: Maybe<Scalars['Int']['output']>;
   operationName?: Maybe<Scalars['String']['output']>;
   operationType?: Maybe<Scalars['String']['output']>;
+  path15?: Maybe<Scalars['String']['output']>;
   refererPath?: Maybe<Scalars['String']['output']>;
   requestQuery?: Maybe<Scalars['String']['output']>;
   requestTime?: Maybe<Scalars['String']['output']>;
   requestVariables?: Maybe<Scalars['String']['output']>;
+  sessionEnd?: Maybe<Scalars['String']['output']>;
+  sessionId?: Maybe<Scalars['String']['output']>;
+  sessionStart?: Maybe<Scalars['String']['output']>;
   teamId?: Maybe<Scalars['Int']['output']>;
   userAgent?: Maybe<Scalars['String']['output']>;
   userEmail?: Maybe<Scalars['String']['output']>;
@@ -32551,28 +32523,10 @@ export type WorkspaceDetails = {
   workspaceId?: Maybe<Scalars['ID']['output']>;
 };
 
-export type MaxUploadMediaMutationVariables = Exact<{
-  r2Url: Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>;
-  apiKey?: InputMaybe<Scalars['String']['input']>;
-  language?: InputMaybe<Scalars['String']['input']>;
-}>;
-
-
-export type MaxUploadMediaMutation = { __typename?: 'Mutation', maxUploadMedia?: { __typename?: 'MaximizerMediaUploadResponse', data?: Array<{ __typename?: 'MaximizerMediaItem', mediaId?: string | null, r2Url?: string | null } | null> | null } | null };
-
-export type MaxCreateAdLaunchMutationVariables = Exact<{
-  input?: InputMaybe<MaxCreateAdLaunchInput>;
-}>;
-
-
-export type MaxCreateAdLaunchMutation = { __typename?: 'Mutation', maxCreateAdLaunchV2?: { __typename?: 'maxCreateAdLaunchResponse', message?: string | null, data?: Array<{ __typename?: 'maxAdLaunch', id?: string | null, name?: string | null, query?: string | null, adAccountID?: string | null, countries?: Array<string | null> | null, excludeCountries?: Array<string | null> | null, language?: string | null, provider?: string | null, splitCountries?: boolean | null, worldwide?: boolean | null, segment?: boolean | null, keywords?: Array<string | null> | null, mediaIDs?: Array<string | null> | null, titles?: Array<string | null> | null, bodies?: Array<string | null> | null, status?: string | null, createdTS?: number | null, facebookData?: any | null, pixel?: any | null } | null> | null } | null };
-
 export type MaxConfigQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type MaxConfigQuery = { __typename?: 'Query', maxConfigV2?: any | null };
 
 
-export const MaxUploadMediaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"MaxUploadMedia"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"r2Url"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"apiKey"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"language"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"maxUploadMedia"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"r2Url"},"value":{"kind":"Variable","name":{"kind":"Name","value":"r2Url"}}},{"kind":"Argument","name":{"kind":"Name","value":"apiKey"},"value":{"kind":"Variable","name":{"kind":"Name","value":"apiKey"}}},{"kind":"Argument","name":{"kind":"Name","value":"language"},"value":{"kind":"Variable","name":{"kind":"Name","value":"language"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mediaId"}},{"kind":"Field","name":{"kind":"Name","value":"r2Url"}}]}}]}}]}}]} as unknown as DocumentNode<MaxUploadMediaMutation, MaxUploadMediaMutationVariables>;
-export const MaxCreateAdLaunchDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"MaxCreateAdLaunch"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"maxCreateAdLaunchInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"maxCreateAdLaunchV2"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"query"}},{"kind":"Field","name":{"kind":"Name","value":"adAccountID"}},{"kind":"Field","name":{"kind":"Name","value":"countries"}},{"kind":"Field","name":{"kind":"Name","value":"excludeCountries"}},{"kind":"Field","name":{"kind":"Name","value":"language"}},{"kind":"Field","name":{"kind":"Name","value":"provider"}},{"kind":"Field","name":{"kind":"Name","value":"splitCountries"}},{"kind":"Field","name":{"kind":"Name","value":"worldwide"}},{"kind":"Field","name":{"kind":"Name","value":"segment"}},{"kind":"Field","name":{"kind":"Name","value":"keywords"}},{"kind":"Field","name":{"kind":"Name","value":"mediaIDs"}},{"kind":"Field","name":{"kind":"Name","value":"titles"}},{"kind":"Field","name":{"kind":"Name","value":"bodies"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"createdTS"}},{"kind":"Field","name":{"kind":"Name","value":"facebookData"}},{"kind":"Field","name":{"kind":"Name","value":"pixel"}}]}}]}}]}}]} as unknown as DocumentNode<MaxCreateAdLaunchMutation, MaxCreateAdLaunchMutationVariables>;
 export const MaxConfigDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"MaxConfig"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"maxConfigV2"}}]}}]} as unknown as DocumentNode<MaxConfigQuery, MaxConfigQueryVariables>;
